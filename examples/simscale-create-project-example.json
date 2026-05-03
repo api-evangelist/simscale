@@ -1,0 +1,30 @@
+{
+  "title": "Create Project Example",
+  "description": "Example request and response for creating a SimScale simulation project.",
+  "request": {
+    "method": "POST",
+    "url": "https://api.simscale.com/v0/projects",
+    "headers": {
+      "X-API-KEY": "{api_key}",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "name": "Wind Analysis - Office Tower",
+      "description": "Pedestrian wind comfort analysis for the new office tower design.",
+      "measurementSystem": "SI"
+    }
+  },
+  "response": {
+    "status": 201,
+    "body": {
+      "projectId": "proj_abc123def456",
+      "name": "Wind Analysis - Office Tower",
+      "description": "Pedestrian wind comfort analysis for the new office tower design.",
+      "measurementSystem": "SI",
+      "created": "2026-05-02T10:00:00Z",
+      "modified": "2026-05-02T10:00:00Z",
+      "geometryCount": 0,
+      "simulationCount": 0
+    }
+  }
+}

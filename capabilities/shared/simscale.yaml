@@ -1,0 +1,474 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "SimScale REST API"
+  description: "SimScale cloud CAE platform REST API. Manages projects, geometry uploads, mesh generation, CFD/FEA simulation configuration and execution, and results retrieval for engineering automation."
+  tags:
+  - CAE
+  - CFD
+  - FEA
+  - Simulation
+  - Engineering
+  - Cloud Simulation
+  created: "2026-05-02"
+  modified: "2026-05-02"
+
+binds:
+  - namespace: env
+    keys:
+      SIMSCALE_API_KEY: SIMSCALE_API_KEY
+
+capability:
+  consumes:
+    - type: http
+      namespace: simscale
+      baseUri: https://api.simscale.com
+      description: "SimScale cloud CAE simulation REST API."
+      authentication:
+        type: apikey
+        key: X-API-KEY
+        value: "{{SIMSCALE_API_KEY}}"
+        placement: header
+      resources:
+        - name: projects
+          path: /v0/projects
+          description: "Simulation project management."
+          operations:
+            - name: list-projects
+              method: GET
+              description: "List all simulation projects."
+              inputParameters:
+                - name: limit
+                  in: query
+                  type: integer
+                  required: false
+                - name: page
+                  in: query
+                  type: integer
+                  required: false
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-project
+              method: POST
+              description: "Create a new simulation project."
+              body:
+                type: json
+                data:
+                  name: "{{tools.name}}"
+                  description: "{{tools.description}}"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: project
+          path: /v0/projects/{project_id}
+          description: "Single project operations."
+          operations:
+            - name: get-project
+              method: GET
+              description: "Get project details."
+              inputParameters:
+                - name: project_id
+                  in: path
+                  type: string
+                  required: true
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: update-project
+              method: PUT
+              description: "Update project name or description."
+              inputParameters:
+                - name: project_id
+                  in: path
+                  type: string
+                  required: true
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: delete-project
+              method: DELETE
+              description: "Delete a project and all its data."
+              inputParameters:
+                - name: project_id
+                  in: path
+                  type: string
+                  required: true
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: storage
+          path: /v0/storage
+          description: "File storage for CAD uploads."
+          operations:
+            - name: create-storage
+              method: POST
+              description: "Create a storage location and get a presigned upload URL."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: geometries
+          path: /v0/projects/{project_id}/geometries
+          description: "CAD geometry management."
+          operations:
+            - name: list-geometries
+              method: GET
+              description: "List all geometries in a project."
+              inputParameters:
+                - name: project_id
+                  in: path
+                  type: string
+                  required: true
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: import-geometry
+              method: POST
+              description: "Import a CAD geometry file into a project."
+              inputParameters:
+                - name: project_id
+                  in: path
+                  type: string
+                  required: true
+              body:
+                type: json
+                data:
+                  name: "{{tools.name}}"
+                  storageId: "{{tools.storage_id}}"
+                  format: "{{tools.format}}"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: geometry
+          path: /v0/projects/{project_id}/geometries/{geometry_id}
+          description: "Single geometry operations."
+          operations:
+            - name: get-geometry
+              method: GET
+              description: "Get geometry details and import status."
+              inputParameters:
+                - name: project_id
+                  in: path
+                  type: string
+                  required: true
+                - name: geometry_id
+                  in: path
+                  type: string
+                  required: true
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: simulations
+          path: /v0/projects/{project_id}/simulations
+          description: "Simulation management."
+          operations:
+            - name: list-simulations
+              method: GET
+              description: "List all simulations in a project."
+              inputParameters:
+                - name: project_id
+                  in: path
+                  type: string
+                  required: true
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-simulation
+              method: POST
+              description: "Create a new simulation."
+              inputParameters:
+                - name: project_id
+                  in: path
+                  type: string
+                  required: true
+              body:
+                type: json
+                data:
+                  name: "{{tools.name}}"
+                  type: "{{tools.simulation_type}}"
+                  geometryId: "{{tools.geometry_id}}"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: simulation
+          path: /v0/projects/{project_id}/simulations/{simulation_id}
+          description: "Single simulation operations."
+          operations:
+            - name: get-simulation
+              method: GET
+              description: "Get simulation specification and status."
+              inputParameters:
+                - name: project_id
+                  in: path
+                  type: string
+                  required: true
+                - name: simulation_id
+                  in: path
+                  type: string
+                  required: true
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: update-simulation
+              method: PUT
+              description: "Update simulation configuration."
+              inputParameters:
+                - name: project_id
+                  in: path
+                  type: string
+                  required: true
+                - name: simulation_id
+                  in: path
+                  type: string
+                  required: true
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: mesh-operations
+          path: /v0/projects/{project_id}/mesh-operations
+          description: "Mesh generation operations."
+          operations:
+            - name: list-mesh-operations
+              method: GET
+              description: "List all mesh operations in a project."
+              inputParameters:
+                - name: project_id
+                  in: path
+                  type: string
+                  required: true
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-mesh-operation
+              method: POST
+              description: "Create a new mesh generation operation."
+              inputParameters:
+                - name: project_id
+                  in: path
+                  type: string
+                  required: true
+              body:
+                type: json
+                data:
+                  name: "{{tools.name}}"
+                  geometryId: "{{tools.geometry_id}}"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: mesh-operation
+          path: /v0/projects/{project_id}/mesh-operations/{mesh_operation_id}
+          description: "Single mesh operation."
+          operations:
+            - name: get-mesh-operation
+              method: GET
+              description: "Get mesh operation status."
+              inputParameters:
+                - name: project_id
+                  in: path
+                  type: string
+                  required: true
+                - name: mesh_operation_id
+                  in: path
+                  type: string
+                  required: true
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: start-mesh
+          path: /v0/projects/{project_id}/mesh-operations/{mesh_operation_id}/start
+          description: "Start mesh generation."
+          operations:
+            - name: start-mesh-operation
+              method: POST
+              description: "Trigger mesh generation for a mesh operation."
+              inputParameters:
+                - name: project_id
+                  in: path
+                  type: string
+                  required: true
+                - name: mesh_operation_id
+                  in: path
+                  type: string
+                  required: true
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: simulation-runs
+          path: /v0/projects/{project_id}/simulations/{simulation_id}/runs
+          description: "Simulation run management."
+          operations:
+            - name: list-simulation-runs
+              method: GET
+              description: "List all runs for a simulation."
+              inputParameters:
+                - name: project_id
+                  in: path
+                  type: string
+                  required: true
+                - name: simulation_id
+                  in: path
+                  type: string
+                  required: true
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-simulation-run
+              method: POST
+              description: "Create and start a new simulation run."
+              inputParameters:
+                - name: project_id
+                  in: path
+                  type: string
+                  required: true
+                - name: simulation_id
+                  in: path
+                  type: string
+                  required: true
+              body:
+                type: json
+                data:
+                  name: "{{tools.name}}"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: simulation-run
+          path: /v0/projects/{project_id}/simulations/{simulation_id}/runs/{run_id}
+          description: "Single simulation run."
+          operations:
+            - name: get-simulation-run
+              method: GET
+              description: "Get simulation run status and progress."
+              inputParameters:
+                - name: project_id
+                  in: path
+                  type: string
+                  required: true
+                - name: simulation_id
+                  in: path
+                  type: string
+                  required: true
+                - name: run_id
+                  in: path
+                  type: string
+                  required: true
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: simulation-results
+          path: /v0/projects/{project_id}/simulations/{simulation_id}/runs/{run_id}/results
+          description: "Simulation results and output data."
+          operations:
+            - name: get-simulation-results
+              method: GET
+              description: "Retrieve results and download links for a completed simulation run."
+              inputParameters:
+                - name: project_id
+                  in: path
+                  type: string
+                  required: true
+                - name: simulation_id
+                  in: path
+                  type: string
+                  required: true
+                - name: run_id
+                  in: path
+                  type: string
+                  required: true
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8100
+      namespace: simscale-rest
+      resources:
+        - path: /v1/projects
+          name: projects
+          operations:
+            - method: GET
+              name: list-projects
+              description: "List simulation projects."
+            - method: POST
+              name: create-project
+              description: "Create a project."
+
+    - type: mcp
+      port: 9100
+      namespace: simscale-mcp
+      transport: http
+      tools:
+        - name: list-projects
+          description: "List all simulation projects."
+          hints:
+            readOnly: true
+          call: "simscale.list-projects"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-simulation-run
+          description: "Check the status of a simulation run."
+          hints:
+            readOnly: true
+          call: "simscale.get-simulation-run"
+          with:
+            project_id: "tools.project_id"
+            simulation_id: "tools.simulation_id"
+            run_id: "tools.run_id"
+          outputParameters:
+            - type: object
+              mapping: "$."

@@ -1,0 +1,9 @@
+name: SimScale
+description: SimScale cloud CAE simulation platform API review.
+url: https://raw.githubusercontent.com/api-evangelist/simscale/refs/heads/main/review.yml
+created: '2026-05-02'
+modified: '2026-05-02'
+reviews:
+- date: '2026-05-02'
+  rating: 4
+  summary: SimScale provides a well-designed REST API for cloud-based engineering simulation (CFD, FEA, thermal). Swagger UI is available at api.simscale.com/apidoc. Python and C# SDKs are open-source on GitHub. API access requires an Enterprise plan. Clean resource hierarchy (project > geometry > simulation > mesh > run > results).

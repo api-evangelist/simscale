@@ -1,0 +1,68 @@
+{
+  "title": "SimScale Project Structure",
+  "description": "Structural documentation for SimScale Project, Geometry, Simulation, MeshOperation, and SimulationRun resources.",
+  "version": "0.0.0",
+  "structure": {
+    "Project": {
+      "description": "A SimScale simulation project containing geometries and simulations.",
+      "fields": {
+        "projectId": {"type": "string"},
+        "name": {"type": "string"},
+        "description": {"type": "string"},
+        "measurementSystem": {"type": "enum", "values": ["SI", "US"]},
+        "created": {"type": "datetime"},
+        "modified": {"type": "datetime"},
+        "geometryCount": {"type": "integer"},
+        "simulationCount": {"type": "integer"}
+      }
+    },
+    "Geometry": {
+      "description": "An imported CAD geometry file.",
+      "fields": {
+        "geometryId": {"type": "string"},
+        "name": {"type": "string"},
+        "status": {"type": "enum", "values": ["UPLOADING", "PROCESSING", "FINISHED", "FAILED"]},
+        "format": {"type": "enum", "values": ["PARASOLID", "STEP", "IGES", "STL"]},
+        "numberOfSolids": {"type": "integer"},
+        "numberOfSurfaces": {"type": "integer"},
+        "created": {"type": "datetime"}
+      }
+    },
+    "Simulation": {
+      "description": "A physics simulation specification.",
+      "fields": {
+        "simulationId": {"type": "string"},
+        "name": {"type": "string"},
+        "type": {"type": "enum", "values": ["INCOMPRESSIBLE", "COMPRESSIBLE", "CONJUGATE_HEAT_TRANSFER", "CONVECTIVE_HEAT_TRANSFER", "STRUCTURAL", "DYNAMIC", "PEDESTRIAN_WIND_COMFORT"]},
+        "geometryId": {"type": "string"},
+        "status": {"type": "enum", "values": ["DRAFT", "COMPUTED", "INVALID"]},
+        "created": {"type": "datetime"},
+        "modified": {"type": "datetime"}
+      }
+    },
+    "MeshOperation": {
+      "description": "A mesh generation operation applied to a geometry.",
+      "fields": {
+        "meshOperationId": {"type": "string"},
+        "name": {"type": "string"},
+        "geometryId": {"type": "string"},
+        "status": {"type": "enum", "values": ["PENDING", "RUNNING", "FINISHED", "FAILED", "CANCELED"]},
+        "meshId": {"type": "string", "description": "Generated mesh ID after completion."},
+        "created": {"type": "datetime"},
+        "finishedAt": {"type": "datetime"}
+      }
+    },
+    "SimulationRun": {
+      "description": "A simulation execution run instance.",
+      "fields": {
+        "runId": {"type": "string"},
+        "name": {"type": "string"},
+        "simulationId": {"type": "string"},
+        "status": {"type": "enum", "values": ["PENDING", "RUNNING", "FINISHED", "FAILED", "CANCELED"]},
+        "progress": {"type": "number", "range": "0-100", "description": "Completion percentage."},
+        "startTime": {"type": "datetime"},
+        "finishedTime": {"type": "datetime"}
+      }
+    }
+  }
+}

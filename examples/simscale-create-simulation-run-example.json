@@ -1,0 +1,27 @@
+{
+  "title": "Create Simulation Run Example",
+  "description": "Example request and response for starting a simulation run in SimScale.",
+  "request": {
+    "method": "POST",
+    "url": "https://api.simscale.com/v0/projects/proj_abc123def456/simulations/sim_xyz789/runs",
+    "headers": {
+      "X-API-KEY": "{api_key}",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "name": "Run 1 - Base Case"
+    }
+  },
+  "response": {
+    "status": 201,
+    "body": {
+      "runId": "run_111222333",
+      "name": "Run 1 - Base Case",
+      "simulationId": "sim_xyz789",
+      "status": "PENDING",
+      "progress": 0.0,
+      "startTime": "2026-05-02T10:30:00Z",
+      "finishedTime": null
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "simscale": "https://api.simscale.com/vocab#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "Project": "schema:Project",
+    "Geometry": "simscale:Geometry",
+    "Simulation": "simscale:Simulation",
+    "MeshOperation": "simscale:MeshOperation",
+    "SimulationRun": "simscale:SimulationRun",
+    "SimulationResults": "simscale:SimulationResults",
+
+    "projectId": "@id",
+    "simulationId": "@id",
+    "geometryId": "@id",
+    "meshOperationId": "@id",
+    "runId": "@id",
+
+    "name": "schema:name",
+    "description": "schema:description",
+    "created": {"@id": "schema:dateCreated", "@type": "xsd:dateTime"},
+    "modified": {"@id": "schema:dateModified", "@type": "xsd:dateTime"},
+    "status": "schema:status",
+
+    "measurementSystem": "simscale:measurementSystem",
+    "geometryCount": "simscale:geometryCount",
+    "simulationCount": "simscale:simulationCount",
+
+    "format": "simscale:fileFormat",
+    "numberOfSolids": "simscale:solidCount",
+    "numberOfSurfaces": "simscale:surfaceCount",
+
+    "type": "schema:additionalType",
+    "model": "simscale:physicsModel",
+
+    "progress": "simscale:completionPercentage",
+    "startTime": {"@id": "schema:startDate", "@type": "xsd:dateTime"},
+    "finishedTime": {"@id": "schema:endDate", "@type": "xsd:dateTime"},
+
+    "outputs": "simscale:resultOutputs",
+    "downloadUrl": "schema:url"
+  }
+}

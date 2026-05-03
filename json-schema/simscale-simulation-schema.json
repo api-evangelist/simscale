@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/simscale/main/json-schema/simscale-simulation-schema.json",
+  "title": "SimScale Simulation",
+  "description": "Schema for a SimScale simulation specification resource.",
+  "type": "object",
+  "properties": {
+    "simulationId": {"type": "string", "description": "Unique simulation identifier."},
+    "name": {"type": "string", "description": "Simulation name."},
+    "type": {
+      "type": "string",
+      "enum": ["INCOMPRESSIBLE", "COMPRESSIBLE", "CONJUGATE_HEAT_TRANSFER", "CONVECTIVE_HEAT_TRANSFER", "STRUCTURAL", "DYNAMIC", "PEDESTRIAN_WIND_COMFORT"],
+      "description": "Physics model type."
+    },
+    "geometryId": {"type": "string", "description": "Associated geometry identifier."},
+    "status": {"type": "string", "enum": ["DRAFT", "COMPUTED", "INVALID"]},
+    "created": {"type": "string", "format": "date-time"},
+    "modified": {"type": "string", "format": "date-time"}
+  },
+  "required": ["simulationId", "name", "type"]
+}

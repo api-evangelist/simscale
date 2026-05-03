@@ -1,0 +1,94 @@
+name: SimScale Vocabulary
+description: Domain vocabulary for the SimScale cloud-based CAE simulation platform covering engineering simulation, meshing, and computational analysis concepts.
+url: https://raw.githubusercontent.com/api-evangelist/simscale/refs/heads/main/vocabulary/simscale-vocabulary.yml
+created: '2026-05-02'
+modified: '2026-05-02'
+tags:
+- CAE
+- CFD
+- FEA
+- Engineering
+- Simulation
+terms:
+- term: Project
+  definition: A top-level container in SimScale that organizes related geometries, simulations, and results. Projects can be shared with team members.
+  type: resource
+  relatedTerms:
+  - Geometry
+  - Simulation
+
+- term: Geometry
+  definition: A CAD model imported into SimScale for simulation. Supported formats include STEP, IGES, Parasolid, and STL. Geometries undergo processing to extract solids and surfaces for meshing.
+  type: resource
+  relatedTerms:
+  - MeshOperation
+  - Simulation
+
+- term: Simulation
+  definition: A physics-based analysis specification that defines the model type (CFD, FEA, thermal), boundary conditions, material properties, and solver settings applied to a geometry.
+  type: resource
+  relatedTerms:
+  - SimulationRun
+  - Geometry
+
+- term: CFD
+  definition: Computational Fluid Dynamics. A simulation method that numerically solves the equations governing fluid flow (Navier-Stokes). SimScale supports incompressible, compressible, and multiphase CFD.
+  type: concept
+  relatedTerms:
+  - Simulation
+  - Meshing
+
+- term: FEA
+  definition: Finite Element Analysis. A numerical method for analyzing structural, thermal, and dynamic behavior of solid bodies under load. SimScale supports static structural, dynamic, and thermal FEA.
+  type: concept
+  relatedTerms:
+  - Simulation
+
+- term: MeshOperation
+  definition: The process of discretizing a CAD geometry into a finite element or finite volume mesh. Mesh quality directly affects simulation accuracy and computation time.
+  type: resource
+  relatedTerms:
+  - Geometry
+  - Simulation
+
+- term: SimulationRun
+  definition: A single execution of a simulation specification. Multiple runs can be created from one simulation to compare design variants or parameter studies.
+  type: resource
+  relatedTerms:
+  - Simulation
+
+- term: Storage
+  definition: A temporary file storage location with a presigned upload URL used to transfer CAD files to SimScale before geometry import.
+  type: concept
+  relatedTerms:
+  - Geometry
+
+- term: MeasurementSystem
+  definition: The unit system used throughout a project. SimScale supports SI (metric) and US (imperial) systems.
+  type: enum
+  values:
+  - SI
+  - US
+
+- term: IncompressibleCFD
+  definition: A CFD simulation type for fluid flows where density variations are negligible (low Mach number). Solves the steady-state or transient Navier-Stokes equations using OpenFOAM solvers.
+  type: concept
+  relatedTerms:
+  - CFD
+
+- term: PedestrianWindComfort
+  definition: A specialized CFD simulation type for evaluating wind conditions at pedestrian level around buildings. SimScale uses the GPU-accelerated Pacefish LBM solver for this analysis.
+  type: concept
+  relatedTerms:
+  - CFD
+
+- term: APIKey
+  definition: The authentication credential for the SimScale REST API, passed as the X-API-KEY request header. Generated in the SimScale account settings. Requires an Enterprise plan.
+  type: security
+
+- term: StorageId
+  definition: The identifier for a pre-signed upload location. Used in the geometry import request after uploading a CAD file to the pre-signed URL.
+  type: concept
+  relatedTerms:
+  - Storage
+  - Geometry

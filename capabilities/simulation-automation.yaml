@@ -1,0 +1,461 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "SimScale Simulation Automation"
+  description: "Workflow capability for automated engineering simulation using SimScale. Covers the complete simulation pipeline: project setup, CAD geometry upload, mesh generation, simulation configuration, execution, and results retrieval for CFD, FEA, and thermal workflows."
+  tags:
+  - CAE
+  - CFD
+  - FEA
+  - Simulation Automation
+  - Engineering
+  - Cloud Simulation
+  created: "2026-05-02"
+  modified: "2026-05-02"
+
+binds:
+  - namespace: env
+    keys:
+      SIMSCALE_API_KEY: SIMSCALE_API_KEY
+
+capability:
+  consumes:
+    - import: simscale
+      location: ./shared/simscale.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: simulation-automation-api
+      description: "Unified REST API for automated engineering simulation workflows on SimScale."
+      resources:
+        - path: /v1/projects
+          name: projects
+          description: "Simulation project lifecycle management."
+          operations:
+            - method: GET
+              name: list-projects
+              description: "List all simulation projects."
+              call: "simscale.list-projects"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-project
+              description: "Create a new simulation project."
+              call: "simscale.create-project"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/projects/{id}
+          name: project
+          description: "Single project operations."
+          operations:
+            - method: GET
+              name: get-project
+              description: "Get project details."
+              call: "simscale.get-project"
+              with:
+                project_id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: PUT
+              name: update-project
+              description: "Update project metadata."
+              call: "simscale.update-project"
+              with:
+                project_id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: DELETE
+              name: delete-project
+              description: "Delete a project."
+              call: "simscale.delete-project"
+              with:
+                project_id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/storage
+          name: storage
+          description: "File storage for geometry uploads."
+          operations:
+            - method: POST
+              name: create-storage
+              description: "Create upload storage and get presigned URL."
+              call: "simscale.create-storage"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/projects/{id}/geometries
+          name: geometries
+          description: "CAD geometry management."
+          operations:
+            - method: GET
+              name: list-geometries
+              description: "List geometries in a project."
+              call: "simscale.list-geometries"
+              with:
+                project_id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: import-geometry
+              description: "Import a CAD geometry file."
+              call: "simscale.import-geometry"
+              with:
+                project_id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/projects/{proj_id}/geometries/{id}
+          name: geometry
+          description: "Single geometry operations."
+          operations:
+            - method: GET
+              name: get-geometry
+              description: "Get geometry import status and details."
+              call: "simscale.get-geometry"
+              with:
+                project_id: "rest.proj_id"
+                geometry_id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/projects/{id}/simulations
+          name: simulations
+          description: "Simulation setup and management."
+          operations:
+            - method: GET
+              name: list-simulations
+              description: "List all simulations in a project."
+              call: "simscale.list-simulations"
+              with:
+                project_id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-simulation
+              description: "Create a new simulation specification."
+              call: "simscale.create-simulation"
+              with:
+                project_id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/projects/{proj_id}/simulations/{id}
+          name: simulation
+          description: "Single simulation operations."
+          operations:
+            - method: GET
+              name: get-simulation
+              description: "Get simulation specification and status."
+              call: "simscale.get-simulation"
+              with:
+                project_id: "rest.proj_id"
+                simulation_id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/projects/{id}/mesh-operations
+          name: mesh-operations
+          description: "Mesh generation operations."
+          operations:
+            - method: GET
+              name: list-mesh-operations
+              description: "List mesh operations in a project."
+              call: "simscale.list-mesh-operations"
+              with:
+                project_id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-mesh-operation
+              description: "Create a mesh generation operation."
+              call: "simscale.create-mesh-operation"
+              with:
+                project_id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/projects/{proj_id}/mesh-operations/{id}/start
+          name: start-mesh
+          description: "Start mesh generation."
+          operations:
+            - method: POST
+              name: start-mesh-operation
+              description: "Trigger mesh generation execution."
+              call: "simscale.start-mesh-operation"
+              with:
+                project_id: "rest.proj_id"
+                mesh_operation_id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/projects/{proj_id}/simulations/{sim_id}/runs
+          name: simulation-runs
+          description: "Simulation execution runs."
+          operations:
+            - method: GET
+              name: list-simulation-runs
+              description: "List all runs for a simulation."
+              call: "simscale.list-simulation-runs"
+              with:
+                project_id: "rest.proj_id"
+                simulation_id: "rest.sim_id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-simulation-run
+              description: "Create and start a new simulation run."
+              call: "simscale.create-simulation-run"
+              with:
+                project_id: "rest.proj_id"
+                simulation_id: "rest.sim_id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/projects/{proj_id}/simulations/{sim_id}/runs/{id}
+          name: simulation-run
+          description: "Single simulation run status."
+          operations:
+            - method: GET
+              name: get-simulation-run
+              description: "Get simulation run status and progress."
+              call: "simscale.get-simulation-run"
+              with:
+                project_id: "rest.proj_id"
+                simulation_id: "rest.sim_id"
+                run_id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/projects/{proj_id}/simulations/{sim_id}/runs/{id}/results
+          name: results
+          description: "Simulation results retrieval."
+          operations:
+            - method: GET
+              name: get-simulation-results
+              description: "Get completed simulation results and download links."
+              call: "simscale.get-simulation-results"
+              with:
+                project_id: "rest.proj_id"
+                simulation_id: "rest.sim_id"
+                run_id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9090
+      namespace: simulation-automation-mcp
+      transport: http
+      description: "MCP server for AI-assisted engineering simulation automation on SimScale."
+      tools:
+        - name: list-projects
+          description: "List all CAE simulation projects in the SimScale account."
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "simscale.list-projects"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-project
+          description: "Create a new engineering simulation project in SimScale."
+          hints:
+            readOnly: false
+          call: "simscale.create-project"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-project
+          description: "Get details of a specific simulation project."
+          hints:
+            readOnly: true
+          call: "simscale.get-project"
+          with:
+            project_id: "tools.project_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: delete-project
+          description: "Delete a simulation project and all associated data."
+          hints:
+            readOnly: false
+            destructive: true
+            idempotent: true
+          call: "simscale.delete-project"
+          with:
+            project_id: "tools.project_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-storage
+          description: "Create a file storage location for uploading a CAD geometry file."
+          hints:
+            readOnly: false
+          call: "simscale.create-storage"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-geometries
+          description: "List all CAD geometries imported into a project."
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "simscale.list-geometries"
+          with:
+            project_id: "tools.project_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: import-geometry
+          description: "Import a CAD geometry file (STEP, IGES, STL, Parasolid) into a project."
+          hints:
+            readOnly: false
+          call: "simscale.import-geometry"
+          with:
+            project_id: "tools.project_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-geometry
+          description: "Check the import status of a CAD geometry file."
+          hints:
+            readOnly: true
+          call: "simscale.get-geometry"
+          with:
+            project_id: "tools.project_id"
+            geometry_id: "tools.geometry_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-simulations
+          description: "List all simulations defined within a project."
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "simscale.list-simulations"
+          with:
+            project_id: "tools.project_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-simulation
+          description: "Create a new CFD, FEA, or thermal simulation for a geometry."
+          hints:
+            readOnly: false
+          call: "simscale.create-simulation"
+          with:
+            project_id: "tools.project_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-simulation
+          description: "Get the full specification and validation status of a simulation."
+          hints:
+            readOnly: true
+          call: "simscale.get-simulation"
+          with:
+            project_id: "tools.project_id"
+            simulation_id: "tools.simulation_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-mesh-operations
+          description: "List all mesh generation operations in a project."
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "simscale.list-mesh-operations"
+          with:
+            project_id: "tools.project_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-mesh-operation
+          description: "Create a mesh generation operation for a CAD geometry."
+          hints:
+            readOnly: false
+          call: "simscale.create-mesh-operation"
+          with:
+            project_id: "tools.project_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-mesh-operation
+          description: "Check the status of a mesh generation operation."
+          hints:
+            readOnly: true
+          call: "simscale.get-mesh-operation"
+          with:
+            project_id: "tools.project_id"
+            mesh_operation_id: "tools.mesh_operation_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: start-mesh-operation
+          description: "Trigger the execution of a mesh generation operation."
+          hints:
+            readOnly: false
+          call: "simscale.start-mesh-operation"
+          with:
+            project_id: "tools.project_id"
+            mesh_operation_id: "tools.mesh_operation_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-simulation-runs
+          description: "List all execution runs for a simulation."
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "simscale.list-simulation-runs"
+          with:
+            project_id: "tools.project_id"
+            simulation_id: "tools.simulation_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-simulation-run
+          description: "Create and start a new simulation computation run."
+          hints:
+            readOnly: false
+          call: "simscale.create-simulation-run"
+          with:
+            project_id: "tools.project_id"
+            simulation_id: "tools.simulation_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-simulation-run
+          description: "Check the status and progress of a simulation run."
+          hints:
+            readOnly: true
+          call: "simscale.get-simulation-run"
+          with:
+            project_id: "tools.project_id"
+            simulation_id: "tools.simulation_id"
+            run_id: "tools.run_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-simulation-results
+          description: "Retrieve results and download links for a completed simulation run."
+          hints:
+            readOnly: true
+          call: "simscale.get-simulation-results"
+          with:
+            project_id: "tools.project_id"
+            simulation_id: "tools.simulation_id"
+            run_id: "tools.run_id"
+          outputParameters:
+            - type: object
+              mapping: "$."

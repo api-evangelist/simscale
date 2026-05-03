@@ -1,0 +1,90 @@
+extends: spectral:oas
+rules:
+  simscale-operation-summary-title-case:
+    description: All operation summaries must use Title Case.
+    message: 'Summary "{{value}}" must use Title Case.'
+    severity: warn
+    given: '$.paths[*][*].summary'
+    then:
+      function: pattern
+      functionOptions:
+        match: '^[A-Z][a-z]+(\s[A-Z][a-z]+)*$'
+
+  simscale-operation-ids-camel-case:
+    description: Operation IDs should use camelCase.
+    message: 'OperationId "{{value}}" should be camelCase.'
+    severity: warn
+    given: '$.paths[*][*].operationId'
+    then:
+      function: pattern
+      functionOptions:
+        match: '^[a-z][a-zA-Z0-9]+$'
+
+  simscale-api-key-required:
+    description: All operations must use X-API-KEY authentication.
+    message: Operation must declare ApiKeyAuth security.
+    severity: warn
+    given: '$.paths[*][*]'
+    then:
+      field: security
+      function: defined
+
+  simscale-path-v0-prefix:
+    description: All paths must be prefixed with /v0/.
+    message: 'Path "{{value}}" must start with /v0/.'
+    severity: error
+    given: '$.paths[*]~'
+    then:
+      function: pattern
+      functionOptions:
+        match: '^/v0/'
+
+  simscale-response-200-or-201:
+    description: Successful operations must define 200 or 201 response.
+    message: Operation must define a 200 or 201 success response.
+    severity: error
+    given: '$.paths[*][*].responses'
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          anyOf:
+          - required: ['200']
+          - required: ['201']
+
+  simscale-description-required:
+    description: All operations must have a description.
+    message: Operation must include a description.
+    severity: warn
+    given: '$.paths[*][*]'
+    then:
+      field: description
+      function: defined
+
+  simscale-tags-required:
+    description: All operations must include at least one tag.
+    message: Operation must include at least one tag.
+    severity: warn
+    given: '$.paths[*][*]'
+    then:
+      field: tags
+      function: defined
+
+  simscale-path-params-described:
+    description: All path parameters must have descriptions.
+    message: Path parameter must have a description.
+    severity: warn
+    given: '$.paths[*][*].parameters[?(@.in == "path")]'
+    then:
+      field: description
+      function: defined
+
+  simscale-schemas-use-camel-case:
+    description: Schema property names should use camelCase (SimScale SDK convention).
+    message: 'Schema property "{{value}}" should use camelCase.'
+    severity: info
+    given: '$.components.schemas[*].properties[*]~'
+    then:
+      function: pattern
+      functionOptions:
+        match: '^[a-z][a-zA-Z0-9]*$'
