@@ -43,6 +43,8 @@ apis:
   - FN: SimScale Support
     url: https://www.simscale.com/support/
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/simscale
 - type: GitHubOrganization
   url: https://github.com/SimScaleGmbH
 - type: DeveloperPortal

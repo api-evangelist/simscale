@@ -1,0 +1,188 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: SimScale REST API — Simulation Runs
+  description: 'SimScale REST API — Simulation Runs. 3 operations. Lead operation: List Simulation Runs. Self-contained Naftiko
+    capability covering one Simscale business surface.'
+  tags:
+  - Simscale
+  - Simulation Runs
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SIMSCALE_API_KEY: SIMSCALE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: simscale-simulation-runs
+    baseUri: https://api.simscale.com
+    description: SimScale REST API — Simulation Runs business capability. Self-contained, no shared references.
+    resources:
+    - name: v0-projects-project_id-simulations-simulation_id-runs
+      path: /v0/projects/{project_id}/simulations/{simulation_id}/runs
+      operations:
+      - name: listsimulationruns
+        method: GET
+        description: List Simulation Runs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: project_id
+          in: path
+          type: string
+          required: true
+        - name: simulation_id
+          in: path
+          type: string
+          required: true
+      - name: createsimulationrun
+        method: POST
+        description: Create Simulation Run
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: project_id
+          in: path
+          type: string
+          required: true
+        - name: simulation_id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v0-projects-project_id-simulations-simulation_id-runs-run_id
+      path: /v0/projects/{project_id}/simulations/{simulation_id}/runs/{run_id}
+      operations:
+      - name: getsimulationrun
+        method: GET
+        description: Get Simulation Run
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: project_id
+          in: path
+          type: string
+          required: true
+        - name: simulation_id
+          in: path
+          type: string
+          required: true
+        - name: run_id
+          in: path
+          type: string
+          description: Unique run identifier
+          required: true
+    authentication:
+      type: apikey
+      key: X-API-KEY
+      value: '{{env.SIMSCALE_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: simscale-simulation-runs-rest
+    port: 8080
+    description: REST adapter for SimScale REST API — Simulation Runs. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v0/projects/{project-id}/simulations/{simulation-id}/runs
+      name: v0-projects-project-id-simulations-simulation-id-runs
+      description: REST surface for v0-projects-project_id-simulations-simulation_id-runs.
+      operations:
+      - method: GET
+        name: listsimulationruns
+        description: List Simulation Runs
+        call: simscale-simulation-runs.listsimulationruns
+        with:
+          project_id: rest.project_id
+          simulation_id: rest.simulation_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createsimulationrun
+        description: Create Simulation Run
+        call: simscale-simulation-runs.createsimulationrun
+        with:
+          project_id: rest.project_id
+          simulation_id: rest.simulation_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v0/projects/{project-id}/simulations/{simulation-id}/runs/{run-id}
+      name: v0-projects-project-id-simulations-simulation-id-runs-run-id
+      description: REST surface for v0-projects-project_id-simulations-simulation_id-runs-run_id.
+      operations:
+      - method: GET
+        name: getsimulationrun
+        description: Get Simulation Run
+        call: simscale-simulation-runs.getsimulationrun
+        with:
+          project_id: rest.project_id
+          simulation_id: rest.simulation_id
+          run_id: rest.run_id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: simscale-simulation-runs-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for SimScale REST API — Simulation Runs. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-simulation-runs
+      description: List Simulation Runs
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: simscale-simulation-runs.listsimulationruns
+      with:
+        project_id: tools.project_id
+        simulation_id: tools.simulation_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-simulation-run
+      description: Create Simulation Run
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: simscale-simulation-runs.createsimulationrun
+      with:
+        project_id: tools.project_id
+        simulation_id: tools.simulation_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-simulation-run
+      description: Get Simulation Run
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: simscale-simulation-runs.getsimulationrun
+      with:
+        project_id: tools.project_id
+        simulation_id: tools.simulation_id
+        run_id: tools.run_id
+      outputParameters:
+      - type: object
+        mapping: $.

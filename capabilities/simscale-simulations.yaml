@@ -1,0 +1,217 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: SimScale REST API — Simulations
+  description: 'SimScale REST API — Simulations. 4 operations. Lead operation: List Simulations. Self-contained Naftiko capability
+    covering one Simscale business surface.'
+  tags:
+  - Simscale
+  - Simulations
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SIMSCALE_API_KEY: SIMSCALE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: simscale-simulations
+    baseUri: https://api.simscale.com
+    description: SimScale REST API — Simulations business capability. Self-contained, no shared references.
+    resources:
+    - name: v0-projects-project_id-simulations
+      path: /v0/projects/{project_id}/simulations
+      operations:
+      - name: listsimulations
+        method: GET
+        description: List Simulations
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: project_id
+          in: path
+          type: string
+          required: true
+      - name: createsimulation
+        method: POST
+        description: Create Simulation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: project_id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v0-projects-project_id-simulations-simulation_id
+      path: /v0/projects/{project_id}/simulations/{simulation_id}
+      operations:
+      - name: getsimulation
+        method: GET
+        description: Get Simulation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: project_id
+          in: path
+          type: string
+          required: true
+        - name: simulation_id
+          in: path
+          type: string
+          description: Unique simulation identifier
+          required: true
+      - name: updatesimulation
+        method: PUT
+        description: Update Simulation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: project_id
+          in: path
+          type: string
+          required: true
+        - name: simulation_id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: X-API-KEY
+      value: '{{env.SIMSCALE_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: simscale-simulations-rest
+    port: 8080
+    description: REST adapter for SimScale REST API — Simulations. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v0/projects/{project-id}/simulations
+      name: v0-projects-project-id-simulations
+      description: REST surface for v0-projects-project_id-simulations.
+      operations:
+      - method: GET
+        name: listsimulations
+        description: List Simulations
+        call: simscale-simulations.listsimulations
+        with:
+          project_id: rest.project_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createsimulation
+        description: Create Simulation
+        call: simscale-simulations.createsimulation
+        with:
+          project_id: rest.project_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v0/projects/{project-id}/simulations/{simulation-id}
+      name: v0-projects-project-id-simulations-simulation-id
+      description: REST surface for v0-projects-project_id-simulations-simulation_id.
+      operations:
+      - method: GET
+        name: getsimulation
+        description: Get Simulation
+        call: simscale-simulations.getsimulation
+        with:
+          project_id: rest.project_id
+          simulation_id: rest.simulation_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatesimulation
+        description: Update Simulation
+        call: simscale-simulations.updatesimulation
+        with:
+          project_id: rest.project_id
+          simulation_id: rest.simulation_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: simscale-simulations-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for SimScale REST API — Simulations. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-simulations
+      description: List Simulations
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: simscale-simulations.listsimulations
+      with:
+        project_id: tools.project_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-simulation
+      description: Create Simulation
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: simscale-simulations.createsimulation
+      with:
+        project_id: tools.project_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-simulation
+      description: Get Simulation
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: simscale-simulations.getsimulation
+      with:
+        project_id: tools.project_id
+        simulation_id: tools.simulation_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-simulation
+      description: Update Simulation
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: simscale-simulations.updatesimulation
+      with:
+        project_id: tools.project_id
+        simulation_id: tools.simulation_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

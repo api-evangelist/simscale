@@ -1,0 +1,241 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: SimScale REST API — Projects
+  description: 'SimScale REST API — Projects. 5 operations. Lead operation: List Projects. Self-contained Naftiko capability
+    covering one Simscale business surface.'
+  tags:
+  - Simscale
+  - Projects
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SIMSCALE_API_KEY: SIMSCALE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: simscale-projects
+    baseUri: https://api.simscale.com
+    description: SimScale REST API — Projects business capability. Self-contained, no shared references.
+    resources:
+    - name: v0-projects
+      path: /v0/projects
+      operations:
+      - name: listprojects
+        method: GET
+        description: List Projects
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+          description: Number of projects to return
+        - name: page
+          in: query
+          type: integer
+          description: Page number (zero-indexed)
+      - name: createproject
+        method: POST
+        description: Create Project
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v0-projects-project_id
+      path: /v0/projects/{project_id}
+      operations:
+      - name: getproject
+        method: GET
+        description: Get Project
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: project_id
+          in: path
+          type: string
+          description: Unique project identifier
+          required: true
+      - name: updateproject
+        method: PUT
+        description: Update Project
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: project_id
+          in: path
+          type: string
+          description: Unique project identifier
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteproject
+        method: DELETE
+        description: Delete Project
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: project_id
+          in: path
+          type: string
+          description: Unique project identifier
+          required: true
+    authentication:
+      type: apikey
+      key: X-API-KEY
+      value: '{{env.SIMSCALE_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: simscale-projects-rest
+    port: 8080
+    description: REST adapter for SimScale REST API — Projects. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/v0/projects
+      name: v0-projects
+      description: REST surface for v0-projects.
+      operations:
+      - method: GET
+        name: listprojects
+        description: List Projects
+        call: simscale-projects.listprojects
+        with:
+          limit: rest.limit
+          page: rest.page
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createproject
+        description: Create Project
+        call: simscale-projects.createproject
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v0/projects/{project-id}
+      name: v0-projects-project-id
+      description: REST surface for v0-projects-project_id.
+      operations:
+      - method: GET
+        name: getproject
+        description: Get Project
+        call: simscale-projects.getproject
+        with:
+          project_id: rest.project_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateproject
+        description: Update Project
+        call: simscale-projects.updateproject
+        with:
+          project_id: rest.project_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteproject
+        description: Delete Project
+        call: simscale-projects.deleteproject
+        with:
+          project_id: rest.project_id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: simscale-projects-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for SimScale REST API — Projects. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-projects
+      description: List Projects
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: simscale-projects.listprojects
+      with:
+        limit: tools.limit
+        page: tools.page
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-project
+      description: Create Project
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: simscale-projects.createproject
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-project
+      description: Get Project
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: simscale-projects.getproject
+      with:
+        project_id: tools.project_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-project
+      description: Update Project
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: simscale-projects.updateproject
+      with:
+        project_id: tools.project_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-project
+      description: Delete Project
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: simscale-projects.deleteproject
+      with:
+        project_id: tools.project_id
+      outputParameters:
+      - type: object
+        mapping: $.

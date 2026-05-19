@@ -1,0 +1,93 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: SimScale REST API — Reports
+  description: 'SimScale REST API — Reports. 1 operations. Lead operation: Get Simulation Results. Self-contained Naftiko
+    capability covering one Simscale business surface.'
+  tags:
+  - Simscale
+  - Reports
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SIMSCALE_API_KEY: SIMSCALE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: simscale-reports
+    baseUri: https://api.simscale.com
+    description: SimScale REST API — Reports business capability. Self-contained, no shared references.
+    resources:
+    - name: v0-projects-project_id-simulations-simulation_id-runs-run_id-results
+      path: /v0/projects/{project_id}/simulations/{simulation_id}/runs/{run_id}/results
+      operations:
+      - name: getsimulationresults
+        method: GET
+        description: Get Simulation Results
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: project_id
+          in: path
+          type: string
+          required: true
+        - name: simulation_id
+          in: path
+          type: string
+          required: true
+        - name: run_id
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: apikey
+      key: X-API-KEY
+      value: '{{env.SIMSCALE_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: simscale-reports-rest
+    port: 8080
+    description: REST adapter for SimScale REST API — Reports. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/v0/projects/{project-id}/simulations/{simulation-id}/runs/{run-id}/results
+      name: v0-projects-project-id-simulations-simulation-id-runs-run-id-results
+      description: REST surface for v0-projects-project_id-simulations-simulation_id-runs-run_id-results.
+      operations:
+      - method: GET
+        name: getsimulationresults
+        description: Get Simulation Results
+        call: simscale-reports.getsimulationresults
+        with:
+          project_id: rest.project_id
+          simulation_id: rest.simulation_id
+          run_id: rest.run_id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: simscale-reports-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for SimScale REST API — Reports. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: get-simulation-results
+      description: Get Simulation Results
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: simscale-reports.getsimulationresults
+      with:
+        project_id: tools.project_id
+        simulation_id: tools.simulation_id
+        run_id: tools.run_id
+      outputParameters:
+      - type: object
+        mapping: $.

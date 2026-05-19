@@ -1,0 +1,217 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: SimScale REST API — Mesh Operations
+  description: 'SimScale REST API — Mesh Operations. 4 operations. Lead operation: List Mesh Operations. Self-contained Naftiko
+    capability covering one Simscale business surface.'
+  tags:
+  - Simscale
+  - Mesh Operations
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SIMSCALE_API_KEY: SIMSCALE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: simscale-mesh-operations
+    baseUri: https://api.simscale.com
+    description: SimScale REST API — Mesh Operations business capability. Self-contained, no shared references.
+    resources:
+    - name: v0-projects-project_id-mesh-operations
+      path: /v0/projects/{project_id}/mesh-operations
+      operations:
+      - name: listmeshoperations
+        method: GET
+        description: List Mesh Operations
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: project_id
+          in: path
+          type: string
+          required: true
+      - name: createmeshoperation
+        method: POST
+        description: Create Mesh Operation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: project_id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v0-projects-project_id-mesh-operations-mesh_operation_id
+      path: /v0/projects/{project_id}/mesh-operations/{mesh_operation_id}
+      operations:
+      - name: getmeshoperation
+        method: GET
+        description: Get Mesh Operation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: project_id
+          in: path
+          type: string
+          required: true
+        - name: mesh_operation_id
+          in: path
+          type: string
+          description: Unique mesh operation identifier
+          required: true
+    - name: v0-projects-project_id-mesh-operations-mesh_operation_id-start
+      path: /v0/projects/{project_id}/mesh-operations/{mesh_operation_id}/start
+      operations:
+      - name: startmeshoperation
+        method: POST
+        description: Start Mesh Operation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: project_id
+          in: path
+          type: string
+          required: true
+        - name: mesh_operation_id
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: apikey
+      key: X-API-KEY
+      value: '{{env.SIMSCALE_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: simscale-mesh-operations-rest
+    port: 8080
+    description: REST adapter for SimScale REST API — Mesh Operations. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v0/projects/{project-id}/mesh-operations
+      name: v0-projects-project-id-mesh-operations
+      description: REST surface for v0-projects-project_id-mesh-operations.
+      operations:
+      - method: GET
+        name: listmeshoperations
+        description: List Mesh Operations
+        call: simscale-mesh-operations.listmeshoperations
+        with:
+          project_id: rest.project_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createmeshoperation
+        description: Create Mesh Operation
+        call: simscale-mesh-operations.createmeshoperation
+        with:
+          project_id: rest.project_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v0/projects/{project-id}/mesh-operations/{mesh-operation-id}
+      name: v0-projects-project-id-mesh-operations-mesh-operation-id
+      description: REST surface for v0-projects-project_id-mesh-operations-mesh_operation_id.
+      operations:
+      - method: GET
+        name: getmeshoperation
+        description: Get Mesh Operation
+        call: simscale-mesh-operations.getmeshoperation
+        with:
+          project_id: rest.project_id
+          mesh_operation_id: rest.mesh_operation_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v0/projects/{project-id}/mesh-operations/{mesh-operation-id}/start
+      name: v0-projects-project-id-mesh-operations-mesh-operation-id-start
+      description: REST surface for v0-projects-project_id-mesh-operations-mesh_operation_id-start.
+      operations:
+      - method: POST
+        name: startmeshoperation
+        description: Start Mesh Operation
+        call: simscale-mesh-operations.startmeshoperation
+        with:
+          project_id: rest.project_id
+          mesh_operation_id: rest.mesh_operation_id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: simscale-mesh-operations-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for SimScale REST API — Mesh Operations. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-mesh-operations
+      description: List Mesh Operations
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: simscale-mesh-operations.listmeshoperations
+      with:
+        project_id: tools.project_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-mesh-operation
+      description: Create Mesh Operation
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: simscale-mesh-operations.createmeshoperation
+      with:
+        project_id: tools.project_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-mesh-operation
+      description: Get Mesh Operation
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: simscale-mesh-operations.getmeshoperation
+      with:
+        project_id: tools.project_id
+        mesh_operation_id: tools.mesh_operation_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: start-mesh-operation
+      description: Start Mesh Operation
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: simscale-mesh-operations.startmeshoperation
+      with:
+        project_id: tools.project_id
+        mesh_operation_id: tools.mesh_operation_id
+      outputParameters:
+      - type: object
+        mapping: $.
