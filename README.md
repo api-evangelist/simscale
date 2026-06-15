@@ -1,78 +1,65 @@
-# SimScale
+# SimScale (simscale)
 
 SimScale is a cloud-based computer-aided engineering (CAE) platform offering computational fluid dynamics (CFD), finite element analysis (FEA), and thermal simulation capabilities. The SimScale REST API enables programmatic project management, geometry upload, mesh generation, simulation setup and execution, and results extraction for engineering automation workflows.
 
-- **Website:** https://www.simscale.com
-- **API Product:** https://www.simscale.com/product/api/
-- **Documentation:** https://www.simscale.com/docs/platform/api-and-sdk-documentation/
-- **Swagger UI:** https://api.simscale.com/apidoc/swagger/index.html
-- **GitHub:** https://github.com/SimScaleGmbH
-- **Python SDK:** https://github.com/SimScaleGmbH/simscale-python-sdk
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/simscale/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/simscale/refs/heads/main/apis.yml)
 
-## API
+## Tags
 
-The SimScale REST API is available at `https://api.simscale.com`. Authentication uses an API key passed as the `X-API-KEY` header. API access requires an Enterprise plan.
+- CAE
+- CFD
+- FEA
+- Simulation
+- Engineering
 
-## OpenAPI Specs
+## Timestamps
 
-| Name | Description |
-|---|---|
-| [SimScale REST API](openapi/simscale-openapi.yml) | Full REST API covering projects, geometry, meshing, simulations, runs, and results |
+- **Created:** 2026-05-02
+- **Modified:** 2026-05-02
 
-## Capabilities
+## APIs
 
-### Shared Definitions
+### SimScale REST API
 
-| File | Description |
-|---|---|
-| [simscale](capabilities/shared/simscale.yaml) | SimScale REST API consumed definition |
+The SimScale REST API provides programmatic access to the SimScale cloud simulation platform. Developers can manage projects, upload CAD geometry, configure meshing operations, set up and run CFD/FEA simulations, and retrieve results. Available on Enterprise plans. SDKs available for Python and C#.
 
-### Workflow Capabilities
+- **Human URL:** [https://www.simscale.com/docs/platform/api-and-sdk-documentation/](https://www.simscale.com/docs/platform/api-and-sdk-documentation/)
+- **Base URL:** `https://api.simscale.com`
 
-| Capability | Description |
-|---|---|
-| [Simulation Automation](capabilities/simulation-automation.yaml) | End-to-end simulation pipeline: upload, mesh, simulate, retrieve results |
+#### Tags
 
-## Rules
+- CFD
+- FEA
+- Simulation
+- Geometry
+- Meshing
+- Projects
 
-| Name | Description |
-|---|---|
-| [SimScale Spectral Rules](rules/simscale-rules.yml) | Spectral ruleset enforcing SimScale API conventions |
+#### Properties
 
-## JSON Schema
+- [Documentation](https://www.simscale.com/docs/platform/api-and-sdk-documentation/)
+- [Swagger U I](https://api.simscale.com/apidoc/swagger/index.html)
+- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/simscale/refs/heads/main/openapi/simscale-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Python S D K](https://github.com/SimScaleGmbH/simscale-python-sdk)
+- [GitHub Organization](https://github.com/SimScaleGmbH)
+- [Authentication](https://www.simscale.com/docs/platform/api-and-sdk-documentation/)
+- [Spectral Rules](https://raw.githubusercontent.com/api-evangelist/simscale/refs/heads/main/rules/simscale-rules.yml)
+- [Postman Collection](collections/simscale.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/simscale.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
-| Name | Description |
-|---|---|
-| [Project Schema](json-schema/simscale-project-schema.json) | Schema for SimScale Project resource |
-| [Simulation Schema](json-schema/simscale-simulation-schema.json) | Schema for SimScale Simulation resource |
+## Common Properties
 
-## JSON Structure
-
-| Name | Description |
-|---|---|
-| [Project Structure](json-structure/simscale-project-structure.json) | Structural documentation for Project, Geometry, Simulation, MeshOperation, SimulationRun |
-
-## JSON-LD
-
-| Name | Description |
-|---|---|
-| [SimScale Context](json-ld/simscale-context.jsonld) | JSON-LD context mapping SimScale terms to schema.org |
-
-## Examples
-
-| Name | Description |
-|---|---|
-| [Create Project](examples/simscale-create-project-example.json) | Example: creating a simulation project |
-| [Create Simulation Run](examples/simscale-create-simulation-run-example.json) | Example: starting a simulation run |
-
-## Vocabulary
-
-| Name | Description |
-|---|---|
-| [SimScale Vocabulary](vocabulary/simscale-vocabulary.yml) | Domain terms for cloud CAE simulation |
+- [LinkedIn](https://www.linkedin.com/company/simscale)
+- [GitHub Organization](https://github.com/SimScaleGmbH)
+- [Developer Portal](https://www.simscale.com/product/api/)
+- [Documentation](https://www.simscale.com/docs/)
+- [Python S D K](https://github.com/SimScaleGmbH/simscale-python-sdk)
+- [Pricing](https://www.simscale.com/pricing/)
+- [Terms of Service](https://www.simscale.com/terms-of-service/)
+- [Privacy Policy](https://www.simscale.com/privacy-policy/)
 
 ## Maintainers
 
-**API Evangelist**
-- URL: https://apievangelist.com
-- Email: info@apievangelist.com
+**FN:** API Evangelist
+**Email:** info@apievangelist.com
+**URL:** https://apievangelist.com

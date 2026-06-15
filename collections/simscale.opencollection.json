@@ -1,0 +1,537 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SimScale REST API",
+    "version": "0.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-KEY",
+      "value": "{{X-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Projects",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.simscale.com/v0/projects",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of projects to return"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (zero-indexed)"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of all simulation projects for the authenticated user."
+        },
+        {
+          "info": {
+            "name": "Create Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.simscale.com/v0/projects",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new simulation project."
+        },
+        {
+          "info": {
+            "name": "Get Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.simscale.com/v0/projects/:project_id",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique project identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve details of a specific simulation project."
+        },
+        {
+          "info": {
+            "name": "Update Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.simscale.com/v0/projects/:project_id",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique project identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the name or description of an existing project."
+        },
+        {
+          "info": {
+            "name": "Delete Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.simscale.com/v0/projects/:project_id",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique project identifier"
+              }
+            ]
+          },
+          "docs": "Delete a simulation project and all its associated data."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Storage",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Storage",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.simscale.com/v0/storage"
+          },
+          "docs": "Create a storage location for uploading a CAD file. Returns a presigned upload URL."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Geometry",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Geometries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.simscale.com/v0/projects/:project_id/geometries",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique project identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve all CAD geometries imported into a project."
+        },
+        {
+          "info": {
+            "name": "Import Geometry",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.simscale.com/v0/projects/:project_id/geometries",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique project identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Import a CAD geometry file (previously uploaded to storage) into a project."
+        },
+        {
+          "info": {
+            "name": "Get Geometry",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.simscale.com/v0/projects/:project_id/geometries/:geometry_id",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "geometry_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique geometry identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve details and status of a specific geometry import."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Simulations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Simulations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.simscale.com/v0/projects/:project_id/simulations",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve all simulations defined within a project."
+        },
+        {
+          "info": {
+            "name": "Create Simulation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.simscale.com/v0/projects/:project_id/simulations",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new simulation specification within a project, specifying the physics model and geometry."
+        },
+        {
+          "info": {
+            "name": "Get Simulation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.simscale.com/v0/projects/:project_id/simulations/:simulation_id",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "simulation_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique simulation identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve the full specification and status of a specific simulation."
+        },
+        {
+          "info": {
+            "name": "Update Simulation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.simscale.com/v0/projects/:project_id/simulations/:simulation_id",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "simulation_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the specification of an existing simulation."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Mesh Operations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Mesh Operations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.simscale.com/v0/projects/:project_id/mesh-operations",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve all mesh generation operations within a project."
+        },
+        {
+          "info": {
+            "name": "Create Mesh Operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.simscale.com/v0/projects/:project_id/mesh-operations",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new mesh generation operation for a geometry."
+        },
+        {
+          "info": {
+            "name": "Get Mesh Operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.simscale.com/v0/projects/:project_id/mesh-operations/:mesh_operation_id",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "mesh_operation_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique mesh operation identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve the status and details of a specific mesh operation."
+        },
+        {
+          "info": {
+            "name": "Start Mesh Operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.simscale.com/v0/projects/:project_id/mesh-operations/:mesh_operation_id/start",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "mesh_operation_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Trigger execution of a mesh generation operation."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Simulation Runs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Simulation Runs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.simscale.com/v0/projects/:project_id/simulations/:simulation_id/runs",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "simulation_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve all execution runs for a specific simulation."
+        },
+        {
+          "info": {
+            "name": "Create Simulation Run",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.simscale.com/v0/projects/:project_id/simulations/:simulation_id/runs",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "simulation_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create and start a new execution run for a simulation."
+        },
+        {
+          "info": {
+            "name": "Get Simulation Run",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.simscale.com/v0/projects/:project_id/simulations/:simulation_id/runs/:run_id",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "simulation_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "run_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique run identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve the status and progress of a specific simulation run."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Simulation Results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.simscale.com/v0/projects/:project_id/simulations/:simulation_id/runs/:run_id/results",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "simulation_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "run_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve result data and download links for a completed simulation run."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
