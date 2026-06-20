@@ -1,6 +1,6 @@
 name: SimScale
 description: SimScale is a cloud-based computer-aided engineering (CAE) platform offering computational fluid dynamics (CFD), finite element analysis (FEA), and thermal simulation capabilities. The SimScale REST API enables programmatic project management, geometry upload, mesh generation, simulation setup and execution, and results extraction for engineering automation workflows.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/simscale/refs/heads/main/apis.yml
 created: '2026-05-02'
 modified: '2026-05-02'
@@ -14,7 +14,7 @@ tags:
 apis:
   - name: SimScale REST API
     description: The SimScale REST API provides programmatic access to the SimScale cloud simulation platform. Developers can manage projects, upload CAD geometry, configure meshing operations, set up and run CFD/FEA simulations, and retrieve results. Available on Enterprise plans. SDKs available for Python and C#.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://www.simscale.com/docs/platform/api-and-sdk-documentation/
     baseURL: https://api.simscale.com
     tags:
