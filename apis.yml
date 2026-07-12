@@ -43,6 +43,14 @@ apis:
     - FN: SimScale Support
       url: https://www.simscale.com/support/
 common:
+  - type: VulnerabilityDisclosure
+    url: security/simscale-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/simscale-domain-security.yml
+  - type: Authentication
+    url: authentication/simscale-authentication.yml
+  - url: https://www.simscale.com/blog/feed/
+    type: Blog
   - type: LinkedIn
     url: https://www.linkedin.com/company/simscale
   - type: GitHubOrganization
