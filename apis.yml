@@ -43,6 +43,8 @@ apis:
     - FN: SimScale Support
       url: https://www.simscale.com/support/
 common:
+  - type: AgenticAccess
+    url: agentic-access/simscale-agentic-access.yml
   - type: VulnerabilityDisclosure
     url: security/simscale-vulnerability-disclosure.yml
   - type: DomainSecurity
