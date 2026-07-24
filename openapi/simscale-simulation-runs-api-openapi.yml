@@ -1,0 +1,157 @@
+openapi: 3.0.3
+info:
+  title: SimScale REST Geometry Simulation Runs API
+  description: The SimScale REST API provides programmatic access to the SimScale cloud simulation platform. Manage projects, upload CAD geometry, configure meshing, run CFD/FEA/thermal simulations, and retrieve results. Requires an Enterprise plan and an API key.
+  version: 0.0.0
+  contact:
+    name: SimScale Support
+    url: https://www.simscale.com/support/
+  termsOfService: https://www.simscale.com/terms-of-service/
+servers:
+- url: https://api.simscale.com
+  description: Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Simulation Runs
+  description: Simulation execution and status
+paths:
+  /v0/projects/{project_id}/simulations/{simulation_id}/runs:
+    get:
+      operationId: listSimulationRuns
+      summary: List Simulation Runs
+      description: Retrieve all execution runs for a specific simulation.
+      tags:
+      - Simulation Runs
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: simulation_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of simulation runs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimulationRunList'
+    post:
+      operationId: createSimulationRun
+      summary: Create Simulation Run
+      description: Create and start a new execution run for a simulation.
+      tags:
+      - Simulation Runs
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: simulation_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name for this run
+      responses:
+        '201':
+          description: Simulation run created and started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimulationRun'
+  /v0/projects/{project_id}/simulations/{simulation_id}/runs/{run_id}:
+    get:
+      operationId: getSimulationRun
+      summary: Get Simulation Run
+      description: Retrieve the status and progress of a specific simulation run.
+      tags:
+      - Simulation Runs
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: simulation_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: run_id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Unique run identifier
+      responses:
+        '200':
+          description: Simulation run details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimulationRun'
+        '404':
+          description: Run not found
+components:
+  schemas:
+    SimulationRunList:
+      type: object
+      properties:
+        runs:
+          type: array
+          items:
+            $ref: '#/components/schemas/SimulationRun'
+    SimulationRun:
+      type: object
+      properties:
+        runId:
+          type: string
+        name:
+          type: string
+        simulationId:
+          type: string
+        status:
+          type: string
+          enum:
+          - PENDING
+          - RUNNING
+          - FINISHED
+          - FAILED
+          - CANCELED
+        progress:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 100
+          description: Completion percentage
+        startTime:
+          type: string
+          format: date-time
+        finishedTime:
+          type: string
+          format: date-time
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: SimScale API key. Generate in your SimScale account settings.
+externalDocs:
+  description: SimScale API and SDK Documentation
+  url: https://www.simscale.com/docs/platform/api-and-sdk-documentation/

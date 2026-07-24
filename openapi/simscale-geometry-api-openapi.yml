@@ -1,0 +1,162 @@
+openapi: 3.0.3
+info:
+  title: SimScale REST Geometry API
+  description: The SimScale REST API provides programmatic access to the SimScale cloud simulation platform. Manage projects, upload CAD geometry, configure meshing, run CFD/FEA/thermal simulations, and retrieve results. Requires an Enterprise plan and an API key.
+  version: 0.0.0
+  contact:
+    name: SimScale Support
+    url: https://www.simscale.com/support/
+  termsOfService: https://www.simscale.com/terms-of-service/
+servers:
+- url: https://api.simscale.com
+  description: Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Geometry
+  description: CAD geometry upload and import
+paths:
+  /v0/projects/{project_id}/geometries:
+    get:
+      operationId: listGeometries
+      summary: List Geometries
+      description: Retrieve all CAD geometries imported into a project.
+      tags:
+      - Geometry
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Unique project identifier
+      responses:
+        '200':
+          description: List of geometries
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeometryList'
+    post:
+      operationId: importGeometry
+      summary: Import Geometry
+      description: Import a CAD geometry file (previously uploaded to storage) into a project.
+      tags:
+      - Geometry
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Unique project identifier
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GeometryImportRequest'
+      responses:
+        '201':
+          description: Geometry import initiated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Geometry'
+  /v0/projects/{project_id}/geometries/{geometry_id}:
+    get:
+      operationId: getGeometry
+      summary: Get Geometry
+      description: Retrieve details and status of a specific geometry import.
+      tags:
+      - Geometry
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: geometry_id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Unique geometry identifier
+      responses:
+        '200':
+          description: Geometry details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Geometry'
+        '404':
+          description: Geometry not found
+components:
+  schemas:
+    Geometry:
+      type: object
+      properties:
+        geometryId:
+          type: string
+          description: Unique geometry identifier
+        name:
+          type: string
+        status:
+          type: string
+          enum:
+          - UPLOADING
+          - PROCESSING
+          - FINISHED
+          - FAILED
+        format:
+          type: string
+          enum:
+          - PARASOLID
+          - STEP
+          - IGES
+          - STL
+          description: CAD file format
+        numberOfSolids:
+          type: integer
+        numberOfSurfaces:
+          type: integer
+        created:
+          type: string
+          format: date-time
+    GeometryList:
+      type: object
+      properties:
+        geometries:
+          type: array
+          items:
+            $ref: '#/components/schemas/Geometry'
+        totalCount:
+          type: integer
+    GeometryImportRequest:
+      type: object
+      required:
+      - name
+      - storageId
+      - format
+      properties:
+        name:
+          type: string
+        storageId:
+          type: string
+          description: Storage ID from createStorage response
+        format:
+          type: string
+          enum:
+          - PARASOLID
+          - STEP
+          - IGES
+          - STL
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: SimScale API key. Generate in your SimScale account settings.
+externalDocs:
+  description: SimScale API and SDK Documentation
+  url: https://www.simscale.com/docs/platform/api-and-sdk-documentation/

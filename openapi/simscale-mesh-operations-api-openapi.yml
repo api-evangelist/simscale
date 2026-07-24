@@ -1,0 +1,179 @@
+openapi: 3.0.3
+info:
+  title: SimScale REST Geometry Mesh Operations API
+  description: The SimScale REST API provides programmatic access to the SimScale cloud simulation platform. Manage projects, upload CAD geometry, configure meshing, run CFD/FEA/thermal simulations, and retrieve results. Requires an Enterprise plan and an API key.
+  version: 0.0.0
+  contact:
+    name: SimScale Support
+    url: https://www.simscale.com/support/
+  termsOfService: https://www.simscale.com/terms-of-service/
+servers:
+- url: https://api.simscale.com
+  description: Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Mesh Operations
+  description: Mesh generation and configuration
+paths:
+  /v0/projects/{project_id}/mesh-operations:
+    get:
+      operationId: listMeshOperations
+      summary: List Mesh Operations
+      description: Retrieve all mesh generation operations within a project.
+      tags:
+      - Mesh Operations
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of mesh operations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeshOperationList'
+    post:
+      operationId: createMeshOperation
+      summary: Create Mesh Operation
+      description: Create a new mesh generation operation for a geometry.
+      tags:
+      - Mesh Operations
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MeshOperationInput'
+      responses:
+        '201':
+          description: Mesh operation created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeshOperation'
+  /v0/projects/{project_id}/mesh-operations/{mesh_operation_id}:
+    get:
+      operationId: getMeshOperation
+      summary: Get Mesh Operation
+      description: Retrieve the status and details of a specific mesh operation.
+      tags:
+      - Mesh Operations
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: mesh_operation_id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Unique mesh operation identifier
+      responses:
+        '200':
+          description: Mesh operation details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeshOperation'
+        '404':
+          description: Mesh operation not found
+  /v0/projects/{project_id}/mesh-operations/{mesh_operation_id}/start:
+    post:
+      operationId: startMeshOperation
+      summary: Start Mesh Operation
+      description: Trigger execution of a mesh generation operation.
+      tags:
+      - Mesh Operations
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: mesh_operation_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Mesh operation started
+components:
+  schemas:
+    MeshOperation:
+      type: object
+      properties:
+        meshOperationId:
+          type: string
+        name:
+          type: string
+        geometryId:
+          type: string
+        status:
+          type: string
+          enum:
+          - PENDING
+          - RUNNING
+          - FINISHED
+          - FAILED
+          - CANCELED
+        meshId:
+          type: string
+          description: Generated mesh identifier (after completion)
+        created:
+          type: string
+          format: date-time
+        finishedAt:
+          type: string
+          format: date-time
+    MeshOperationList:
+      type: object
+      properties:
+        meshOperations:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeshOperation'
+    MeshOperationInput:
+      type: object
+      required:
+      - name
+      - geometryId
+      properties:
+        name:
+          type: string
+        geometryId:
+          type: string
+        meshingType:
+          type: string
+          enum:
+          - STITCHED_SURFACE
+          - SWEPT
+          - PARAMETRIC_HEX_CORE
+          - AUTOMATIC
+          default: AUTOMATIC
+        refinements:
+          type: array
+          items:
+            type: object
+          description: Region-specific mesh refinements
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: SimScale API key. Generate in your SimScale account settings.
+externalDocs:
+  description: SimScale API and SDK Documentation
+  url: https://www.simscale.com/docs/platform/api-and-sdk-documentation/

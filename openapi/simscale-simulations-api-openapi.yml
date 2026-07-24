@@ -1,0 +1,199 @@
+openapi: 3.0.3
+info:
+  title: SimScale REST Geometry Simulations API
+  description: The SimScale REST API provides programmatic access to the SimScale cloud simulation platform. Manage projects, upload CAD geometry, configure meshing, run CFD/FEA/thermal simulations, and retrieve results. Requires an Enterprise plan and an API key.
+  version: 0.0.0
+  contact:
+    name: SimScale Support
+    url: https://www.simscale.com/support/
+  termsOfService: https://www.simscale.com/terms-of-service/
+servers:
+- url: https://api.simscale.com
+  description: Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Simulations
+  description: Simulation setup and configuration
+paths:
+  /v0/projects/{project_id}/simulations:
+    get:
+      operationId: listSimulations
+      summary: List Simulations
+      description: Retrieve all simulations defined within a project.
+      tags:
+      - Simulations
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of simulations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimulationList'
+    post:
+      operationId: createSimulation
+      summary: Create Simulation
+      description: Create a new simulation specification within a project, specifying the physics model and geometry.
+      tags:
+      - Simulations
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimulationInput'
+      responses:
+        '201':
+          description: Simulation created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Simulation'
+  /v0/projects/{project_id}/simulations/{simulation_id}:
+    get:
+      operationId: getSimulation
+      summary: Get Simulation
+      description: Retrieve the full specification and status of a specific simulation.
+      tags:
+      - Simulations
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: simulation_id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Unique simulation identifier
+      responses:
+        '200':
+          description: Simulation details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Simulation'
+        '404':
+          description: Simulation not found
+    put:
+      operationId: updateSimulation
+      summary: Update Simulation
+      description: Update the specification of an existing simulation.
+      tags:
+      - Simulations
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: simulation_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimulationInput'
+      responses:
+        '200':
+          description: Simulation updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Simulation'
+components:
+  schemas:
+    SimulationInput:
+      type: object
+      required:
+      - name
+      - type
+      - geometryId
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+          - INCOMPRESSIBLE
+          - COMPRESSIBLE
+          - CONJUGATE_HEAT_TRANSFER
+          - CONVECTIVE_HEAT_TRANSFER
+          - STRUCTURAL
+          - DYNAMIC
+          - PEDESTRIAN_WIND_COMFORT
+        geometryId:
+          type: string
+        model:
+          type: object
+          description: Physics model configuration (simulation-type specific)
+          additionalProperties: true
+    Simulation:
+      type: object
+      properties:
+        simulationId:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+          - INCOMPRESSIBLE
+          - COMPRESSIBLE
+          - CONJUGATE_HEAT_TRANSFER
+          - CONVECTIVE_HEAT_TRANSFER
+          - STRUCTURAL
+          - DYNAMIC
+          - PEDESTRIAN_WIND_COMFORT
+          description: Physics model type
+        geometryId:
+          type: string
+          description: Associated geometry identifier
+        status:
+          type: string
+          enum:
+          - DRAFT
+          - COMPUTED
+          - INVALID
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    SimulationList:
+      type: object
+      properties:
+        simulations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Simulation'
+        totalCount:
+          type: integer
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: SimScale API key. Generate in your SimScale account settings.
+externalDocs:
+  description: SimScale API and SDK Documentation
+  url: https://www.simscale.com/docs/platform/api-and-sdk-documentation/

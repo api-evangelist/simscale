@@ -1,0 +1,94 @@
+openapi: 3.0.3
+info:
+  title: SimScale REST Geometry Reports API
+  description: The SimScale REST API provides programmatic access to the SimScale cloud simulation platform. Manage projects, upload CAD geometry, configure meshing, run CFD/FEA/thermal simulations, and retrieve results. Requires an Enterprise plan and an API key.
+  version: 0.0.0
+  contact:
+    name: SimScale Support
+    url: https://www.simscale.com/support/
+  termsOfService: https://www.simscale.com/terms-of-service/
+servers:
+- url: https://api.simscale.com
+  description: Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Reports
+  description: Post-processing and results reporting
+paths:
+  /v0/projects/{project_id}/simulations/{simulation_id}/runs/{run_id}/results:
+    get:
+      operationId: getSimulationResults
+      summary: Get Simulation Results
+      description: Retrieve result data and download links for a completed simulation run.
+      tags:
+      - Reports
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: simulation_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: run_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Simulation results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimulationResults'
+        '404':
+          description: Results not found
+components:
+  schemas:
+    SimulationResults:
+      type: object
+      properties:
+        runId:
+          type: string
+        status:
+          type: string
+          enum:
+          - PENDING
+          - AVAILABLE
+        outputs:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              type:
+                type: string
+                enum:
+                - SCALAR_FIELD
+                - VECTOR_FIELD
+                - SURFACE_DATA
+                - POINT_DATA
+              downloadUrl:
+                type: string
+                description: Presigned download URL
+              format:
+                type: string
+                enum:
+                - VTK
+                - CSV
+                - JSON
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: SimScale API key. Generate in your SimScale account settings.
+externalDocs:
+  description: SimScale API and SDK Documentation
+  url: https://www.simscale.com/docs/platform/api-and-sdk-documentation/

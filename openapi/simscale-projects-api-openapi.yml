@@ -1,0 +1,199 @@
+openapi: 3.0.3
+info:
+  title: SimScale REST Geometry Projects API
+  description: The SimScale REST API provides programmatic access to the SimScale cloud simulation platform. Manage projects, upload CAD geometry, configure meshing, run CFD/FEA/thermal simulations, and retrieve results. Requires an Enterprise plan and an API key.
+  version: 0.0.0
+  contact:
+    name: SimScale Support
+    url: https://www.simscale.com/support/
+  termsOfService: https://www.simscale.com/terms-of-service/
+servers:
+- url: https://api.simscale.com
+  description: Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Projects
+  description: Simulation project management
+paths:
+  /v0/projects:
+    get:
+      operationId: listProjects
+      summary: List Projects
+      description: Retrieve a list of all simulation projects for the authenticated user.
+      tags:
+      - Projects
+      parameters:
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          default: 25
+          maximum: 100
+        description: Number of projects to return
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 0
+        description: Page number (zero-indexed)
+      responses:
+        '200':
+          description: List of projects
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectList'
+        '401':
+          description: Unauthorized - invalid API key
+    post:
+      operationId: createProject
+      summary: Create Project
+      description: Create a new simulation project.
+      tags:
+      - Projects
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectInput'
+      responses:
+        '201':
+          description: Project created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '400':
+          description: Invalid project data
+  /v0/projects/{project_id}:
+    get:
+      operationId: getProject
+      summary: Get Project
+      description: Retrieve details of a specific simulation project.
+      tags:
+      - Projects
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Unique project identifier
+      responses:
+        '200':
+          description: Project details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '404':
+          description: Project not found
+    put:
+      operationId: updateProject
+      summary: Update Project
+      description: Update the name or description of an existing project.
+      tags:
+      - Projects
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Unique project identifier
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectInput'
+      responses:
+        '200':
+          description: Project updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+    delete:
+      operationId: deleteProject
+      summary: Delete Project
+      description: Delete a simulation project and all its associated data.
+      tags:
+      - Projects
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Unique project identifier
+      responses:
+        '200':
+          description: Project deleted
+components:
+  schemas:
+    Project:
+      type: object
+      properties:
+        projectId:
+          type: string
+          description: Unique project identifier
+        name:
+          type: string
+          description: Project name
+        description:
+          type: string
+          description: Project description
+        measurementSystem:
+          type: string
+          enum:
+          - SI
+          - US
+          description: Unit system used in the project
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        geometryCount:
+          type: integer
+          description: Number of geometries in the project
+        simulationCount:
+          type: integer
+          description: Number of simulations in the project
+    ProjectList:
+      type: object
+      properties:
+        projects:
+          type: array
+          items:
+            $ref: '#/components/schemas/Project'
+        totalCount:
+          type: integer
+    ProjectInput:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        measurementSystem:
+          type: string
+          enum:
+          - SI
+          - US
+          default: SI
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: SimScale API key. Generate in your SimScale account settings.
+externalDocs:
+  description: SimScale API and SDK Documentation
+  url: https://www.simscale.com/docs/platform/api-and-sdk-documentation/

@@ -1,0 +1,52 @@
+openapi: 3.0.3
+info:
+  title: SimScale REST Geometry Storage API
+  description: The SimScale REST API provides programmatic access to the SimScale cloud simulation platform. Manage projects, upload CAD geometry, configure meshing, run CFD/FEA/thermal simulations, and retrieve results. Requires an Enterprise plan and an API key.
+  version: 0.0.0
+  contact:
+    name: SimScale Support
+    url: https://www.simscale.com/support/
+  termsOfService: https://www.simscale.com/terms-of-service/
+servers:
+- url: https://api.simscale.com
+  description: Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Storage
+  description: File storage management
+paths:
+  /v0/storage:
+    post:
+      operationId: createStorage
+      summary: Create Storage
+      description: Create a storage location for uploading a CAD file. Returns a presigned upload URL.
+      tags:
+      - Storage
+      responses:
+        '200':
+          description: Storage location created with upload URL
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorageLocation'
+components:
+  schemas:
+    StorageLocation:
+      type: object
+      properties:
+        storageId:
+          type: string
+          description: Storage location identifier
+        url:
+          type: string
+          description: Pre-signed URL for uploading the file via HTTP PUT
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: SimScale API key. Generate in your SimScale account settings.
+externalDocs:
+  description: SimScale API and SDK Documentation
+  url: https://www.simscale.com/docs/platform/api-and-sdk-documentation/
