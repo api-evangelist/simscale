@@ -1,6 +1,19 @@
 name: SimScale
 description: SimScale is a cloud-based computer-aided engineering (CAE) platform offering computational fluid dynamics (CFD), finite element analysis (FEA), and thermal simulation capabilities. The SimScale REST API enables programmatic project management, geometry upload, mesh generation, simulation setup and execution, and results extraction for engineering automation workflows.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/simscale.png
 url: https://raw.githubusercontent.com/api-evangelist/simscale/refs/heads/main/apis.yml
 created: '2026-05-02'
 modified: '2026-05-02'
@@ -12,36 +25,167 @@ tags:
   - Simulation
   - Engineering
 apis:
-  - name: SimScale REST API
-    description: The SimScale REST API provides programmatic access to the SimScale cloud simulation platform. Developers can manage projects, upload CAD geometry, configure meshing operations, set up and run CFD/FEA simulations, and retrieve results. Available on Enterprise plans. SDKs available for Python and C#.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://www.simscale.com/docs/platform/api-and-sdk-documentation/
-    baseURL: https://api.simscale.com
-    tags:
-    - CFD
-    - FEA
-    - Simulation
-    - Geometry
-    - Meshing
-    - Projects
-    properties:
-    - type: Documentation
-      url: https://www.simscale.com/docs/platform/api-and-sdk-documentation/
-    - type: SwaggerUI
-      url: https://api.simscale.com/apidoc/swagger/index.html
-    - type: OpenAPI
-      url: https://raw.githubusercontent.com/api-evangelist/simscale/refs/heads/main/openapi/simscale-openapi.yml
-    - type: PythonSDK
-      url: https://github.com/SimScaleGmbH/simscale-python-sdk
-    - type: GitHubOrganization
-      url: https://github.com/SimScaleGmbH
-    - type: Authentication
-      url: https://www.simscale.com/docs/platform/api-and-sdk-documentation/
-    - type: SpectralRules
-      url: https://raw.githubusercontent.com/api-evangelist/simscale/refs/heads/main/rules/simscale-rules.yml
-    contact:
-    - FN: SimScale Support
-      url: https://www.simscale.com/support/
+- aid: simscale:simscale-geometry-api
+  name: SimScale Geometry API
+  description: CAD geometry upload and import
+  humanURL: https://www.simscale.com/docs/platform/api-and-sdk-documentation/
+  baseURL: https://api.simscale.com
+  tags:
+  - Geometry
+  properties:
+  - type: OpenAPI
+    url: openapi/simscale-geometry-api-openapi.yml
+  - type: Documentation
+    url: https://www.simscale.com/docs/platform/api-and-sdk-documentation/
+  - type: SwaggerUI
+    url: https://api.simscale.com/apidoc/swagger/index.html
+  - type: PythonSDK
+    url: https://github.com/SimScaleGmbH/simscale-python-sdk
+  - type: GitHubOrganization
+    url: https://github.com/SimScaleGmbH
+  - type: Authentication
+    url: https://www.simscale.com/docs/platform/api-and-sdk-documentation/
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/simscale/refs/heads/main/rules/simscale-rules.yml
+- aid: simscale:simscale-mesh-operations-api
+  name: SimScale Mesh Operations API
+  description: Mesh generation and configuration
+  humanURL: https://www.simscale.com/docs/platform/api-and-sdk-documentation/
+  baseURL: https://api.simscale.com
+  tags:
+  - Mesh Operations
+  properties:
+  - type: OpenAPI
+    url: openapi/simscale-mesh-operations-api-openapi.yml
+  - type: Documentation
+    url: https://www.simscale.com/docs/platform/api-and-sdk-documentation/
+  - type: SwaggerUI
+    url: https://api.simscale.com/apidoc/swagger/index.html
+  - type: PythonSDK
+    url: https://github.com/SimScaleGmbH/simscale-python-sdk
+  - type: GitHubOrganization
+    url: https://github.com/SimScaleGmbH
+  - type: Authentication
+    url: https://www.simscale.com/docs/platform/api-and-sdk-documentation/
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/simscale/refs/heads/main/rules/simscale-rules.yml
+- aid: simscale:simscale-projects-api
+  name: SimScale Projects API
+  description: Simulation project management
+  humanURL: https://www.simscale.com/docs/platform/api-and-sdk-documentation/
+  baseURL: https://api.simscale.com
+  tags:
+  - Projects
+  properties:
+  - type: OpenAPI
+    url: openapi/simscale-projects-api-openapi.yml
+  - type: Documentation
+    url: https://www.simscale.com/docs/platform/api-and-sdk-documentation/
+  - type: SwaggerUI
+    url: https://api.simscale.com/apidoc/swagger/index.html
+  - type: PythonSDK
+    url: https://github.com/SimScaleGmbH/simscale-python-sdk
+  - type: GitHubOrganization
+    url: https://github.com/SimScaleGmbH
+  - type: Authentication
+    url: https://www.simscale.com/docs/platform/api-and-sdk-documentation/
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/simscale/refs/heads/main/rules/simscale-rules.yml
+- aid: simscale:simscale-reports-api
+  name: SimScale Reports API
+  description: Post-processing and results reporting
+  humanURL: https://www.simscale.com/docs/platform/api-and-sdk-documentation/
+  baseURL: https://api.simscale.com
+  tags:
+  - Reports
+  properties:
+  - type: OpenAPI
+    url: openapi/simscale-reports-api-openapi.yml
+  - type: Documentation
+    url: https://www.simscale.com/docs/platform/api-and-sdk-documentation/
+  - type: SwaggerUI
+    url: https://api.simscale.com/apidoc/swagger/index.html
+  - type: PythonSDK
+    url: https://github.com/SimScaleGmbH/simscale-python-sdk
+  - type: GitHubOrganization
+    url: https://github.com/SimScaleGmbH
+  - type: Authentication
+    url: https://www.simscale.com/docs/platform/api-and-sdk-documentation/
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/simscale/refs/heads/main/rules/simscale-rules.yml
+- aid: simscale:simscale-simulation-runs-api
+  name: SimScale Simulation Runs API
+  description: Simulation execution and status
+  humanURL: https://www.simscale.com/docs/platform/api-and-sdk-documentation/
+  baseURL: https://api.simscale.com
+  tags:
+  - Simulation Runs
+  properties:
+  - type: OpenAPI
+    url: openapi/simscale-simulation-runs-api-openapi.yml
+  - type: Documentation
+    url: https://www.simscale.com/docs/platform/api-and-sdk-documentation/
+  - type: SwaggerUI
+    url: https://api.simscale.com/apidoc/swagger/index.html
+  - type: PythonSDK
+    url: https://github.com/SimScaleGmbH/simscale-python-sdk
+  - type: GitHubOrganization
+    url: https://github.com/SimScaleGmbH
+  - type: Authentication
+    url: https://www.simscale.com/docs/platform/api-and-sdk-documentation/
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/simscale/refs/heads/main/rules/simscale-rules.yml
+- aid: simscale:simscale-simulations-api
+  name: SimScale Simulations API
+  description: Simulation setup and configuration
+  humanURL: https://www.simscale.com/docs/platform/api-and-sdk-documentation/
+  baseURL: https://api.simscale.com
+  tags:
+  - Simulations
+  properties:
+  - type: OpenAPI
+    url: openapi/simscale-simulations-api-openapi.yml
+  - type: Documentation
+    url: https://www.simscale.com/docs/platform/api-and-sdk-documentation/
+  - type: SwaggerUI
+    url: https://api.simscale.com/apidoc/swagger/index.html
+  - type: PythonSDK
+    url: https://github.com/SimScaleGmbH/simscale-python-sdk
+  - type: GitHubOrganization
+    url: https://github.com/SimScaleGmbH
+  - type: Authentication
+    url: https://www.simscale.com/docs/platform/api-and-sdk-documentation/
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/simscale/refs/heads/main/rules/simscale-rules.yml
+- aid: simscale:simscale-storage-api
+  name: SimScale Storage API
+  description: File storage management
+  humanURL: https://www.simscale.com/docs/platform/api-and-sdk-documentation/
+  baseURL: https://api.simscale.com
+  tags:
+  - Storage
+  properties:
+  - type: OpenAPI
+    url: openapi/simscale-storage-api-openapi.yml
+  - type: Documentation
+    url: https://www.simscale.com/docs/platform/api-and-sdk-documentation/
+  - type: SwaggerUI
+    url: https://api.simscale.com/apidoc/swagger/index.html
+  - type: PythonSDK
+    url: https://github.com/SimScaleGmbH/simscale-python-sdk
+  - type: GitHubOrganization
+    url: https://github.com/SimScaleGmbH
+  - type: Authentication
+    url: https://www.simscale.com/docs/platform/api-and-sdk-documentation/
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/simscale/refs/heads/main/rules/simscale-rules.yml
 common:
   - type: AgenticAccess
     url: agentic-access/simscale-agentic-access.yml
