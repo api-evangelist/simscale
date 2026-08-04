@@ -1,0 +1,26 @@
+{
+  "provider": "simscale",
+  "sources": [
+    "simscale-geometry-api-openapi.yml",
+    "simscale-mesh-operations-api-openapi.yml",
+    "simscale-projects-api-openapi.yml",
+    "simscale-reports-api-openapi.yml",
+    "simscale-simulation-runs-api-openapi.yml",
+    "simscale-simulations-api-openapi.yml",
+    "simscale-storage-api-openapi.yml"
+  ],
+  "outputs": [
+    "simscale-geometry-api-openapi.yml",
+    "simscale-mesh-operations-api-openapi.yml",
+    "simscale-projects-api-openapi.yml",
+    "simscale-reports-api-openapi.yml",
+    "simscale-simulation-runs-api-openapi.yml",
+    "simscale-simulations-api-openapi.yml",
+    "simscale-storage-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
