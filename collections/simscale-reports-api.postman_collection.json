@@ -1,0 +1,253 @@
+{
+  "item": [
+    {
+      "id": "903163eb-593e-4353-98cc-920c8553cb9c",
+      "name": "Reports",
+      "description": {
+        "content": "Post-processing and results reporting",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7d1183a8-595a-49d5-9c62-0eb7d2284ee0",
+          "name": "Get Simulation Results",
+          "request": {
+            "name": "Get Simulation Results",
+            "description": {
+              "content": "Retrieve result data and download links for a completed simulation run.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "projects",
+                ":project_id",
+                "simulations",
+                ":simulation_id",
+                "runs",
+                ":run_id",
+                "results"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "simulation_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "run_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c328c080-e605-482a-ab35-a56523e19258",
+              "name": "Simulation results",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "projects",
+                    ":project_id",
+                    "simulations",
+                    ":simulation_id",
+                    "runs",
+                    ":run_id",
+                    "results"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "simulation_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "run_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"runId\": \"string\",\n  \"status\": \"PENDING\",\n  \"outputs\": [\n    {\n      \"name\": \"string\",\n      \"type\": \"POINT_DATA\",\n      \"downloadUrl\": \"string\",\n      \"format\": \"JSON\"\n    },\n    {\n      \"name\": \"string\",\n      \"type\": \"SCALAR_FIELD\",\n      \"downloadUrl\": \"string\",\n      \"format\": \"JSON\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "43c424e2-7d04-4813-9aa1-6d5dd44b3fda",
+              "name": "Results not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "projects",
+                    ":project_id",
+                    "simulations",
+                    ":simulation_id",
+                    "runs",
+                    ":run_id",
+                    "results"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "simulation_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "run_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.simscale.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "38ebe529-a0c8-4969-99e6-63e2558fc65c",
+    "name": "SimScale REST Geometry Reports API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The SimScale REST API provides programmatic access to the SimScale cloud simulation platform. Manage projects, upload CAD geometry, configure meshing, run CFD/FEA/thermal simulations, and retrieve results. Requires an Enterprise plan and an API key.\n\nContact Support:\n Name: SimScale Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SimScale REST Geometry API",
+    "version": "0.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-KEY",
+      "value": "{{X-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Geometry",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Geometries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.simscale.com/v0/projects/:project_id/geometries",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique project identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve all CAD geometries imported into a project."
+        },
+        {
+          "info": {
+            "name": "Import Geometry",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.simscale.com/v0/projects/:project_id/geometries",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique project identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Import a CAD geometry file (previously uploaded to storage) into a project."
+        },
+        {
+          "info": {
+            "name": "Get Geometry",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.simscale.com/v0/projects/:project_id/geometries/:geometry_id",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "geometry_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique geometry identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve details and status of a specific geometry import."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

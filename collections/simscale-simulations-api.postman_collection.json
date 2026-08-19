@@ -1,0 +1,581 @@
+{
+  "item": [
+    {
+      "id": "c01615f9-7199-4d93-9377-06db1fccf0bd",
+      "name": "Simulations",
+      "description": {
+        "content": "Simulation setup and configuration",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d043254b-1106-45da-a330-90309b48feb0",
+          "name": "List Simulations",
+          "request": {
+            "name": "List Simulations",
+            "description": {
+              "content": "Retrieve all simulations defined within a project.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "projects",
+                ":project_id",
+                "simulations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "339e8c99-dbf4-409f-a50a-b05dcffe8039",
+              "name": "List of simulations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "projects",
+                    ":project_id",
+                    "simulations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"simulations\": [\n    {\n      \"simulationId\": \"string\",\n      \"name\": \"string\",\n      \"type\": \"CONVECTIVE_HEAT_TRANSFER\",\n      \"geometryId\": \"string\",\n      \"status\": \"COMPUTED\",\n      \"created\": \"1985-12-02T14:33:10.164Z\",\n      \"modified\": \"1985-02-04T21:21:40.845Z\"\n    },\n    {\n      \"simulationId\": \"string\",\n      \"name\": \"string\",\n      \"type\": \"INCOMPRESSIBLE\",\n      \"geometryId\": \"string\",\n      \"status\": \"INVALID\",\n      \"created\": \"1957-03-14T05:13:49.062Z\",\n      \"modified\": \"1947-05-19T14:49:48.902Z\"\n    }\n  ],\n  \"totalCount\": 9666\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7e55331a-8255-4eca-84fc-b891f8389da4",
+          "name": "Create Simulation",
+          "request": {
+            "name": "Create Simulation",
+            "description": {
+              "content": "Create a new simulation specification within a project, specifying the physics model and geometry.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "projects",
+                ":project_id",
+                "simulations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"geometryId\": \"<string>\",\n  \"model\": {\n    \"key_0\": false\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ec652826-2439-49ef-b8be-148846cf58c0",
+              "name": "Simulation created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "projects",
+                    ":project_id",
+                    "simulations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"geometryId\": \"<string>\",\n  \"model\": {\n    \"key_0\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"simulationId\": \"string\",\n  \"name\": \"string\",\n  \"type\": \"DYNAMIC\",\n  \"geometryId\": \"string\",\n  \"status\": \"DRAFT\",\n  \"created\": \"1959-10-13T20:43:48.554Z\",\n  \"modified\": \"1947-08-12T14:57:11.027Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1c88dff2-6454-4113-92c1-ea3782df2825",
+          "name": "Get Simulation",
+          "request": {
+            "name": "Get Simulation",
+            "description": {
+              "content": "Retrieve the full specification and status of a specific simulation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "projects",
+                ":project_id",
+                "simulations",
+                ":simulation_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "simulation_id",
+                  "description": "(Required) Unique simulation identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bc11eea2-1c6a-4cf2-a855-0ba382ec75c2",
+              "name": "Simulation details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "projects",
+                    ":project_id",
+                    "simulations",
+                    ":simulation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "simulation_id",
+                      "description": "(Required) Unique simulation identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"simulationId\": \"string\",\n  \"name\": \"string\",\n  \"type\": \"DYNAMIC\",\n  \"geometryId\": \"string\",\n  \"status\": \"DRAFT\",\n  \"created\": \"1959-10-13T20:43:48.554Z\",\n  \"modified\": \"1947-08-12T14:57:11.027Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "018b59fa-0d76-460d-be61-875c592d4cee",
+              "name": "Simulation not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "projects",
+                    ":project_id",
+                    "simulations",
+                    ":simulation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "simulation_id",
+                      "description": "(Required) Unique simulation identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e66633de-61de-47c2-b53a-c2c23a4fb44c",
+          "name": "Update Simulation",
+          "request": {
+            "name": "Update Simulation",
+            "description": {
+              "content": "Update the specification of an existing simulation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "projects",
+                ":project_id",
+                "simulations",
+                ":simulation_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project_id",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "simulation_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"geometryId\": \"<string>\",\n  \"model\": {\n    \"key_0\": false\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2647c03f-7dac-42ac-bb8d-f8bc75d479b5",
+              "name": "Simulation updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "projects",
+                    ":project_id",
+                    "simulations",
+                    ":simulation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_id",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "simulation_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"geometryId\": \"<string>\",\n  \"model\": {\n    \"key_0\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"simulationId\": \"string\",\n  \"name\": \"string\",\n  \"type\": \"DYNAMIC\",\n  \"geometryId\": \"string\",\n  \"status\": \"DRAFT\",\n  \"created\": \"1959-10-13T20:43:48.554Z\",\n  \"modified\": \"1947-08-12T14:57:11.027Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.simscale.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "20ebb645-7cb4-4d8f-aa42-c645755fcacb",
+    "name": "SimScale REST Geometry Simulations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The SimScale REST API provides programmatic access to the SimScale cloud simulation platform. Manage projects, upload CAD geometry, configure meshing, run CFD/FEA/thermal simulations, and retrieve results. Requires an Enterprise plan and an API key.\n\nContact Support:\n Name: SimScale Support",
+      "type": "text/plain"
+    }
+  }
+}

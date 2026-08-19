@@ -1,0 +1,54 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SimScale REST Geometry Reports API",
+    "version": "0.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-KEY",
+      "value": "{{X-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Simulation Results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.simscale.com/v0/projects/:project_id/simulations/:simulation_id/runs/:run_id/results",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "simulation_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "run_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve result data and download links for a completed simulation run."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

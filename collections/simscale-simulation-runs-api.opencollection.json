@@ -1,0 +1,105 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SimScale REST Geometry Simulation Runs API",
+    "version": "0.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-KEY",
+      "value": "{{X-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Simulation Runs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Simulation Runs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.simscale.com/v0/projects/:project_id/simulations/:simulation_id/runs",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "simulation_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve all execution runs for a specific simulation."
+        },
+        {
+          "info": {
+            "name": "Create Simulation Run",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.simscale.com/v0/projects/:project_id/simulations/:simulation_id/runs",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "simulation_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create and start a new execution run for a simulation."
+        },
+        {
+          "info": {
+            "name": "Get Simulation Run",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.simscale.com/v0/projects/:project_id/simulations/:simulation_id/runs/:run_id",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "simulation_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "run_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique run identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve the status and progress of a specific simulation run."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

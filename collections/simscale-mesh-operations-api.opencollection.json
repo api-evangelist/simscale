@@ -1,0 +1,113 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SimScale REST Geometry Mesh Operations API",
+    "version": "0.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-KEY",
+      "value": "{{X-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Mesh Operations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Mesh Operations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.simscale.com/v0/projects/:project_id/mesh-operations",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve all mesh generation operations within a project."
+        },
+        {
+          "info": {
+            "name": "Create Mesh Operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.simscale.com/v0/projects/:project_id/mesh-operations",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new mesh generation operation for a geometry."
+        },
+        {
+          "info": {
+            "name": "Get Mesh Operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.simscale.com/v0/projects/:project_id/mesh-operations/:mesh_operation_id",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "mesh_operation_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique mesh operation identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve the status and details of a specific mesh operation."
+        },
+        {
+          "info": {
+            "name": "Start Mesh Operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.simscale.com/v0/projects/:project_id/mesh-operations/:mesh_operation_id/start",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "mesh_operation_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Trigger execution of a mesh generation operation."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
