@@ -77,6 +77,8 @@ apis:
   humanURL: https://www.simscale.com/docs/platform/api-and-sdk-documentation/
   baseURL: https://api.simscale.com
   tags:
+  - Project
+  tags_raw:
   - Projects
   properties:
   - type: OpenAPI
