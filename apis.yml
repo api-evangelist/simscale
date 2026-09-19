@@ -161,6 +161,8 @@ apis:
   humanURL: https://www.simscale.com/docs/platform/api-and-sdk-documentation/
   baseURL: https://api.simscale.com
   tags:
+  - Simulation
+  tags_raw:
   - Simulations
   properties:
   - type: OpenAPI
