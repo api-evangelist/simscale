@@ -1,13 +1,7 @@
 {
   "provider": "simscale",
   "sources": [
-    "simscale-geometry-api-openapi.yml",
-    "simscale-mesh-operations-api-openapi.yml",
-    "simscale-projects-api-openapi.yml",
-    "simscale-reports-api-openapi.yml",
-    "simscale-simulation-runs-api-openapi.yml",
-    "simscale-simulations-api-openapi.yml",
-    "simscale-storage-api-openapi.yml"
+    "_original/simscale-openapi.yml"
   ],
   "outputs": [
     "simscale-geometry-api-openapi.yml",
@@ -21,6 +15,18 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "simscale-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "simscale-geometry-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "simscale-mesh-operations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "simscale-projects-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "simscale-reports-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "simscale-simulation-runs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "simscale-simulations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "simscale-storage-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

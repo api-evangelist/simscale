@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: SimScale REST Geometry Simulations API
+  title: SimScale REST Simulations API
   description: The SimScale REST API provides programmatic access to the SimScale cloud simulation platform. Manage projects, upload CAD geometry, configure meshing, run CFD/FEA/thermal simulations, and retrieve results. Requires an Enterprise plan and an API key.
   version: 0.0.0
   contact:
@@ -121,31 +121,6 @@ paths:
                 $ref: '#/components/schemas/Simulation'
 components:
   schemas:
-    SimulationInput:
-      type: object
-      required:
-      - name
-      - type
-      - geometryId
-      properties:
-        name:
-          type: string
-        type:
-          type: string
-          enum:
-          - INCOMPRESSIBLE
-          - COMPRESSIBLE
-          - CONJUGATE_HEAT_TRANSFER
-          - CONVECTIVE_HEAT_TRANSFER
-          - STRUCTURAL
-          - DYNAMIC
-          - PEDESTRIAN_WIND_COMFORT
-        geometryId:
-          type: string
-        model:
-          type: object
-          description: Physics model configuration (simulation-type specific)
-          additionalProperties: true
     Simulation:
       type: object
       properties:
@@ -179,6 +154,31 @@ components:
         modified:
           type: string
           format: date-time
+    SimulationInput:
+      type: object
+      required:
+      - name
+      - type
+      - geometryId
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+          - INCOMPRESSIBLE
+          - COMPRESSIBLE
+          - CONJUGATE_HEAT_TRANSFER
+          - CONVECTIVE_HEAT_TRANSFER
+          - STRUCTURAL
+          - DYNAMIC
+          - PEDESTRIAN_WIND_COMFORT
+        geometryId:
+          type: string
+        model:
+          type: object
+          description: Physics model configuration (simulation-type specific)
+          additionalProperties: true
     SimulationList:
       type: object
       properties:

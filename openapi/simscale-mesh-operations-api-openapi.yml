@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: SimScale REST Geometry Mesh Operations API
+  title: SimScale REST Mesh Operations API
   description: The SimScale REST API provides programmatic access to the SimScale cloud simulation platform. Manage projects, upload CAD geometry, configure meshing, run CFD/FEA/thermal simulations, and retrieve results. Requires an Enterprise plan and an API key.
   version: 0.0.0
   contact:
@@ -112,32 +112,6 @@ paths:
           description: Mesh operation started
 components:
   schemas:
-    MeshOperation:
-      type: object
-      properties:
-        meshOperationId:
-          type: string
-        name:
-          type: string
-        geometryId:
-          type: string
-        status:
-          type: string
-          enum:
-          - PENDING
-          - RUNNING
-          - FINISHED
-          - FAILED
-          - CANCELED
-        meshId:
-          type: string
-          description: Generated mesh identifier (after completion)
-        created:
-          type: string
-          format: date-time
-        finishedAt:
-          type: string
-          format: date-time
     MeshOperationList:
       type: object
       properties:
@@ -168,6 +142,32 @@ components:
           items:
             type: object
           description: Region-specific mesh refinements
+    MeshOperation:
+      type: object
+      properties:
+        meshOperationId:
+          type: string
+        name:
+          type: string
+        geometryId:
+          type: string
+        status:
+          type: string
+          enum:
+          - PENDING
+          - RUNNING
+          - FINISHED
+          - FAILED
+          - CANCELED
+        meshId:
+          type: string
+          description: Generated mesh identifier (after completion)
+        created:
+          type: string
+          format: date-time
+        finishedAt:
+          type: string
+          format: date-time
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
