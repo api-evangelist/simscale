@@ -110,13 +110,6 @@ paths:
           description: Run not found
 components:
   schemas:
-    SimulationRunList:
-      type: object
-      properties:
-        runs:
-          type: array
-          items:
-            $ref: '#/components/schemas/SimulationRun'
     SimulationRun:
       type: object
       properties:
@@ -146,6 +139,13 @@ components:
         finishedTime:
           type: string
           format: date-time
+    SimulationRunList:
+      type: object
+      properties:
+        runs:
+          type: array
+          items:
+            $ref: '#/components/schemas/SimulationRun'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

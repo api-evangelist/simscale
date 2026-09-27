@@ -112,13 +112,6 @@ paths:
           description: Mesh operation started
 components:
   schemas:
-    MeshOperationList:
-      type: object
-      properties:
-        meshOperations:
-          type: array
-          items:
-            $ref: '#/components/schemas/MeshOperation'
     MeshOperationInput:
       type: object
       required:
@@ -168,6 +161,13 @@ components:
         finishedAt:
           type: string
           format: date-time
+    MeshOperationList:
+      type: object
+      properties:
+        meshOperations:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeshOperation'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

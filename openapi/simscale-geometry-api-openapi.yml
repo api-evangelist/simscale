@@ -123,15 +123,6 @@ components:
         created:
           type: string
           format: date-time
-    GeometryList:
-      type: object
-      properties:
-        geometries:
-          type: array
-          items:
-            $ref: '#/components/schemas/Geometry'
-        totalCount:
-          type: integer
     GeometryImportRequest:
       type: object
       required:
@@ -151,6 +142,15 @@ components:
           - STEP
           - IGES
           - STL
+    GeometryList:
+      type: object
+      properties:
+        geometries:
+          type: array
+          items:
+            $ref: '#/components/schemas/Geometry'
+        totalCount:
+          type: integer
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
