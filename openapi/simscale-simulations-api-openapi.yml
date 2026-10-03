@@ -121,6 +121,15 @@ paths:
                 $ref: '#/components/schemas/Simulation'
 components:
   schemas:
+    SimulationList:
+      type: object
+      properties:
+        simulations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Simulation'
+        totalCount:
+          type: integer
     Simulation:
       type: object
       properties:
@@ -179,15 +188,6 @@ components:
           type: object
           description: Physics model configuration (simulation-type specific)
           additionalProperties: true
-    SimulationList:
-      type: object
-      properties:
-        simulations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Simulation'
-        totalCount:
-          type: integer
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
