@@ -1,21 +1,19 @@
-# Kin Score artifact — simscale — 2026-09-01T210448
+# Kin Score artifact — simscale — 2026-09-24T161608
 # The API Evangelist rating (https://github.com/api-evangelist/kin-score). Generated; do not edit.
 ---
 kin_score:
   slug: simscale
-  schema_version: 0.18.0
-  scored_at: '2026-09-01'
-  run_ts: 2026-09-01T210448
-  composite: 37.4
+  schema_version: 0.22.0
+  scored_at: '2026-09-24'
+  run_ts: 2026-09-24T161608
+  composite: 36.7
   band: thin
   facets:
     discoverability: 68.5
     contract_quality: 62.7
-    governance: 13.6
+    contract_governance: 13.6
     operational_transparency: 10.5
     developer_ergonomics: 33.3
-    commercial_clarity: 26.3
-    contract_governance: 13.6
     access_clarity: 26.3
   agent_readiness:
     score: 19.8
