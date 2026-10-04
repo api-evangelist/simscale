@@ -93,6 +93,15 @@ paths:
           description: Geometry not found
 components:
   schemas:
+    GeometryList:
+      type: object
+      properties:
+        geometries:
+          type: array
+          items:
+            $ref: '#/components/schemas/Geometry'
+        totalCount:
+          type: integer
     Geometry:
       type: object
       properties:
@@ -123,15 +132,6 @@ components:
         created:
           type: string
           format: date-time
-    GeometryList:
-      type: object
-      properties:
-        geometries:
-          type: array
-          items:
-            $ref: '#/components/schemas/Geometry'
-        totalCount:
-          type: integer
     GeometryImportRequest:
       type: object
       required:

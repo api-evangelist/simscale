@@ -121,15 +121,31 @@ paths:
                 $ref: '#/components/schemas/Simulation'
 components:
   schemas:
-    SimulationList:
+    SimulationInput:
       type: object
+      required:
+      - name
+      - type
+      - geometryId
       properties:
-        simulations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Simulation'
-        totalCount:
-          type: integer
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+          - INCOMPRESSIBLE
+          - COMPRESSIBLE
+          - CONJUGATE_HEAT_TRANSFER
+          - CONVECTIVE_HEAT_TRANSFER
+          - STRUCTURAL
+          - DYNAMIC
+          - PEDESTRIAN_WIND_COMFORT
+        geometryId:
+          type: string
+        model:
+          type: object
+          description: Physics model configuration (simulation-type specific)
+          additionalProperties: true
     Simulation:
       type: object
       properties:
@@ -163,31 +179,15 @@ components:
         modified:
           type: string
           format: date-time
-    SimulationInput:
+    SimulationList:
       type: object
-      required:
-      - name
-      - type
-      - geometryId
       properties:
-        name:
-          type: string
-        type:
-          type: string
-          enum:
-          - INCOMPRESSIBLE
-          - COMPRESSIBLE
-          - CONJUGATE_HEAT_TRANSFER
-          - CONVECTIVE_HEAT_TRANSFER
-          - STRUCTURAL
-          - DYNAMIC
-          - PEDESTRIAN_WIND_COMFORT
-        geometryId:
-          type: string
-        model:
-          type: object
-          description: Physics model configuration (simulation-type specific)
-          additionalProperties: true
+        simulations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Simulation'
+        totalCount:
+          type: integer
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

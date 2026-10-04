@@ -112,6 +112,32 @@ paths:
           description: Mesh operation started
 components:
   schemas:
+    MeshOperation:
+      type: object
+      properties:
+        meshOperationId:
+          type: string
+        name:
+          type: string
+        geometryId:
+          type: string
+        status:
+          type: string
+          enum:
+          - PENDING
+          - RUNNING
+          - FINISHED
+          - FAILED
+          - CANCELED
+        meshId:
+          type: string
+          description: Generated mesh identifier (after completion)
+        created:
+          type: string
+          format: date-time
+        finishedAt:
+          type: string
+          format: date-time
     MeshOperationList:
       type: object
       properties:
@@ -142,32 +168,6 @@ components:
           items:
             type: object
           description: Region-specific mesh refinements
-    MeshOperation:
-      type: object
-      properties:
-        meshOperationId:
-          type: string
-        name:
-          type: string
-        geometryId:
-          type: string
-        status:
-          type: string
-          enum:
-          - PENDING
-          - RUNNING
-          - FINISHED
-          - FAILED
-          - CANCELED
-        meshId:
-          type: string
-          description: Generated mesh identifier (after completion)
-        created:
-          type: string
-          format: date-time
-        finishedAt:
-          type: string
-          format: date-time
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

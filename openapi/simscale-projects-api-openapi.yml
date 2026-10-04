@@ -134,6 +134,30 @@ paths:
           description: Project deleted
 components:
   schemas:
+    ProjectList:
+      type: object
+      properties:
+        projects:
+          type: array
+          items:
+            $ref: '#/components/schemas/Project'
+        totalCount:
+          type: integer
+    ProjectInput:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        measurementSystem:
+          type: string
+          enum:
+          - SI
+          - US
+          default: SI
     Project:
       type: object
       properties:
@@ -164,30 +188,6 @@ components:
         simulationCount:
           type: integer
           description: Number of simulations in the project
-    ProjectInput:
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        measurementSystem:
-          type: string
-          enum:
-          - SI
-          - US
-          default: SI
-    ProjectList:
-      type: object
-      properties:
-        projects:
-          type: array
-          items:
-            $ref: '#/components/schemas/Project'
-        totalCount:
-          type: integer
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
