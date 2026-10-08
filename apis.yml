@@ -204,6 +204,12 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/simscale/refs/heads/main/rules/simscale-rules.yml
 common:
+  - type: Plans
+    url: plans/simscale-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/simscale-rate-limits.yml
+  - type: FinOps
+    url: finops/simscale-finops.yml
   - type: Website
     url: https://www.simscale.com/
   - type: AgenticAccess
